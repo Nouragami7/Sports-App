@@ -18,6 +18,7 @@
 		22DD913E2DE8904700BBB758 /* Sports_AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DD913D2DE8904700BBB758 /* Sports_AppUITests.swift */; };
 		22DD91402DE8904800BBB758 /* Sports_AppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DD913F2DE8904800BBB758 /* Sports_AppUITestsLaunchTests.swift */; };
 		22DD91552DE8921200BBB758 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 22DD91542DE8921200BBB758 /* Kingfisher */; };
+		22DD91592DE89A9000BBB758 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 22DD91582DE89A9000BBB758 /* Alamofire */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +61,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				22DD91552DE8921200BBB758 /* Kingfisher in Frameworks */,
+				22DD91592DE89A9000BBB758 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -214,6 +216,7 @@
 			name = "Sports-App";
 			packageProductDependencies = (
 				22DD91542DE8921200BBB758 /* Kingfisher */,
+				22DD91582DE89A9000BBB758 /* Alamofire */,
 			);
 			productName = "Sports-App";
 			productReference = 22DD91162DE8904500BBB758 /* Sports-App.app */;
@@ -289,6 +292,7 @@
 			mainGroup = 22DD910D2DE8904500BBB758;
 			packageReferences = (
 				22DD91532DE8921200BBB758 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				22DD91572DE89A9000BBB758 /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			productRefGroup = 22DD91172DE8904500BBB758 /* Products */;
 			projectDirPath = "";
@@ -682,6 +686,14 @@
 				minimumVersion = 7.11.0;
 			};
 		};
+		22DD91572DE89A9000BBB758 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.9.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -689,6 +701,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 22DD91532DE8921200BBB758 /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
+		};
+		22DD91582DE89A9000BBB758 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 22DD91572DE89A9000BBB758 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
 		};
 /* End XCSwiftPackageProductDependency section */
 
