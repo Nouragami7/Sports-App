@@ -8,5 +8,5 @@
 import Foundation
 
 protocol LeaguesProtocol{
-    func renderToView(result : FootballLeagueResponse)
+    func renderToView(result : LeaguesResponse)
 }

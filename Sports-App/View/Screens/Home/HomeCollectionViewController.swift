@@ -48,29 +48,15 @@ class HomeCollectionViewController: UICollectionViewController , UICollectionVie
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedSport = sports[indexPath.row].name
-        
-        
-        switch(selectedSport)
-        {
-        case "Football":
+        switch(selectedSport) {
+        case "Football", "Basketball", "Tennis", "Cricket":
             let leaguesVC = LeaguesTableViewController(nibName: "LeaguesTableViewController", bundle: nil)
-            
-            self.navigationController?.pushViewController(leaguesVC, animated: true)
-        case "Basketball":
-            let leaguesVC = LeaguesTableViewController(nibName: "LeaguesTableViewController", bundle: nil)
-            self.navigationController?.pushViewController(leaguesVC, animated: true)
-        case "Tennis":
-            let leaguesVC = LeaguesTableViewController(nibName: "LeaguesTableViewController", bundle: nil)
-            self.navigationController?.pushViewController(leaguesVC, animated: true)
-        case "Cricket":
-            let leaguesVC = LeaguesTableViewController(nibName: "LeaguesTableViewController", bundle: nil)
+            leaguesVC.sport = selectedSport
             self.navigationController?.pushViewController(leaguesVC, animated: true)
         default:
-            print("Deafult for now \(selectedSport)\n")
             let leaguesVC = LeaguesTableViewController(nibName: "LeaguesTableViewController", bundle: nil)
-                self.navigationController?.pushViewController(leaguesVC, animated: true)
+            self.navigationController?.pushViewController(leaguesVC, animated: true)
         }
-        
     }
 
 

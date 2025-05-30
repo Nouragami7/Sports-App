@@ -16,6 +16,6 @@ struct SportsData {
         Sport(name: "Football", imageName: "football"),
         Sport(name: "Basketball", imageName: "basketball"),
         Sport(name: "Tennis", imageName: "tennis"),
-         Sport(name: "Cricket", imageName: "cricket"),
+        Sport(name: "Cricket", imageName: "cricket"),
      ]
 }

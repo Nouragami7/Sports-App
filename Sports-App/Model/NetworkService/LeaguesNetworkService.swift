@@ -8,33 +8,26 @@
 import Foundation
 import Alamofire
 
-class FootballNetworkService: FootballNetworkProtocol {
-    static func fetchFootballLeagues(completionHandler: @escaping (FootballLeagueResponse?) -> Void) {
+class LeaguesNetworkService: LeaguesNetworkProtocol {
+    static func fetchLeagues(for sport: String,completionHandler: @escaping (LeaguesResponse?) -> Void) {
         let parameters = ["met": "Leagues"]
-        guard let url = createURL(sport: "football", endpoint: APIConstants.Endpoints.leagues, parameters: parameters) else {
+        guard let url = createURL(sport: sport.lowercased(), endpoint: APIConstants.Endpoints.leagues, parameters: parameters) else {
                print("Invalid URL")
                completionHandler(nil)
                return
            }
 
-        AF.request(url).responseDecodable(of: FootballLeagueResponse.self) { response in
+        AF.request(url).responseDecodable(of: LeaguesResponse.self) { response in
             switch response.result {
-            case .success(let footballLeagueResponse):
-                completionHandler(footballLeagueResponse)
-                print(footballLeagueResponse)
+            case .success(let leaguesResponse):
+                completionHandler(leaguesResponse)
+                print(leaguesResponse)
             case .failure(let error):
                 print("Alamofire error: \(error)")
                 completionHandler(nil)
             }
         }
     }
-    
-    
-    
-    
-    
-
-    
     
     private static func createURL(sport: String, endpoint: String, parameters: [String: String]) -> URL? {
         var components = URLComponents(string: "\(APIConstants.baseHost)/\(sport)/")
