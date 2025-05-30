@@ -10,24 +10,31 @@ import Kingfisher
 class LeaguesTableViewController: UITableViewController, LeaguesProtocol {
     
     var sport:String?
-    func renderToView(result: FootballLeagueResponse) {
+    func renderToView(result: LeaguesResponse) {
         DispatchQueue.main.async {
-            self.footballLeagues = result.result
+            self.leagues = result.result
             self.tableView.reloadData()
         }
     }
     
-    var footballLeagues : [FootballLeague] = []
+    var leagues : [Leagues] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.title = "Leagues"
+        
         let nib = UINib(nibName: "LeagueTableViewCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "cell")
         
+        guard let sport = sport else {
+                print("Sport is nil")
+                return
+            }
         
-        let fooballLeaguesPresenter = FooballLeaguesPresenter(footballLeagueVC: self)
-        fooballLeaguesPresenter.getFootballLeagues()
+        
+        let fooballLeaguesPresenter = LeaguesPresnter(leagueVC: self)
+        fooballLeaguesPresenter.getFootballLeagues(for : sport)
     
     }
 
@@ -38,16 +45,21 @@ class LeaguesTableViewController: UITableViewController, LeaguesProtocol {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return footballLeagues.count
+        return leagues.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! LeagueTableViewCell
         
-        let leagues = footballLeagues[indexPath.row]
+        let leagues = leagues[indexPath.row]
         cell.leagueName.text = leagues.league_name
-        cell.leagueCountry.text = leagues.country_name
+        if sport == "Cricket" {
+               cell.leagueCountry.text = leagues.league_year
+           } else {
+               cell.leagueCountry.text = leagues.country_name
+           }
+
         if let leagueUrl = URL(string: leagues.league_logo ?? " "){
             cell.leagueImage.kf.setImage(with: leagueUrl, placeholder: UIImage(systemName: "league"))
         }

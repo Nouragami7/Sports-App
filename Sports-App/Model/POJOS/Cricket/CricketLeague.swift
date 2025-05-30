@@ -10,7 +10,6 @@ import Foundation
 struct CricketLeague :Decodable {
     var league_key : Int
     var league_name :String
-    
     var league_year : String?
      
 }
