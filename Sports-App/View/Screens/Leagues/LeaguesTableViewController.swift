@@ -9,6 +9,7 @@ import UIKit
 import Kingfisher
 class LeaguesTableViewController: UITableViewController, LeaguesProtocol {
     
+    var sport:String?
     func renderToView(result: FootballLeagueResponse) {
         DispatchQueue.main.async {
             self.footballLeagues = result.result

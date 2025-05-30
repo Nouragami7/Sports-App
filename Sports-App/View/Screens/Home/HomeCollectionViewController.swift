@@ -48,6 +48,8 @@ class HomeCollectionViewController: UICollectionViewController , UICollectionVie
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedSport = sports[indexPath.row].name
+        
+        
         switch(selectedSport)
         {
         case "Football":

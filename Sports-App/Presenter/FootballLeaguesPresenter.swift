@@ -15,7 +15,7 @@ class FooballLeaguesPresenter{
     }
     
     func getFootballLeagues(){
-        FootballNetworkService.fetchFootballLeagues{
+        FootballNetworkService.fetchFootballLeagues(){
             result in
             if let footballLeaguesResults = result{
                 self.footballLeagueVC?.renderToView(result: footballLeaguesResults)
