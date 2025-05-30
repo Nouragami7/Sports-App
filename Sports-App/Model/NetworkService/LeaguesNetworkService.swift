@@ -29,13 +29,6 @@ class LeaguesNetworkService: LeaguesNetworkProtocol {
         }
     }
     
-    
-    
-    
-    
-
-    
-    
     private static func createURL(sport: String, endpoint: String, parameters: [String: String]) -> URL? {
         var components = URLComponents(string: "\(APIConstants.baseHost)/\(sport)/")
         var queryItems = [URLQueryItem(name: "APIkey", value: APIConstants.apiKey)]
