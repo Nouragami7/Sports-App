@@ -10,5 +10,6 @@ import Foundation
 protocol DetailsProtocol {
     func renderToView(result : FixturesResponse)
     func renderPastEventsToView(result : FixturesResponse)
+    func renderTeams(result: TeamsResponse)
  
 }

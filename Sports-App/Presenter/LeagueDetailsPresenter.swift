@@ -16,7 +16,7 @@ class LeaguesDetailsPresnter {
     func getUpcomingFixtures(from: String, to: String, sport: String, leagueId: String) {
       let leagueIdString = String(leagueId)
 
-         FixturesNetworkService.fetchUpcommingEvents(from: from, to: to, for: sport, leagueId: leagueIdString) { response in
+         LeaguesDetailsNetworkService.fetchUpcommingEvents(from: from, to: to, for: sport, leagueId: leagueIdString) { response in
              guard let fixtures = response?.result else {
                  print("errorrr in presentert")
                  return
@@ -24,10 +24,11 @@ class LeaguesDetailsPresnter {
              self.detailsVC?.renderToView(result: response!)
          }
      }
+    
     func getPastFixtures(from: String, to: String, sport: String, leagueId: String) {
       let leagueIdString = String(leagueId)
 
-         FixturesNetworkService.fetchUpcommingEvents(from: from, to: to, for: sport, leagueId: leagueIdString) { response in
+         LeaguesDetailsNetworkService.fetchUpcommingEvents(from: from, to: to, for: sport, leagueId: leagueIdString) { response in
              guard let fixtures = response?.result else {
                  print("errorrr in presentert")
                  return
@@ -35,4 +36,18 @@ class LeaguesDetailsPresnter {
              self.detailsVC?.renderPastEventsToView(result: response!)
          }
      }
+    
+    func getTeams(sport: String, leagueId: String) {
+        let leagueIdString = String(leagueId)
+        
+        LeaguesDetailsNetworkService.fetchTeams(for: sport, leagueId: leagueIdString) { response in
+            guard let teams = response?.result else {
+                print("Error at fetching teams")
+                return
+            }
+            self.detailsVC?.renderTeams(result: response!)
+        }
+    }
+
+    
 }

@@ -6,9 +6,6 @@
 //
 
 import Foundation
-import Foundation
-
-import Foundation
 
 struct FixturesResponse: Decodable {
     let success: Int?

@@ -7,18 +7,13 @@
 
 import Foundation
 import Alamofire
-protocol FixturesNetworkProtocol{
-    static func fetchUpcommingEvents(from: String, to: String, for sport: String,leagueId:String,completionHandler: @escaping (FixturesResponse?) -> Void)
-    
-}
 
-
-class FixturesNetworkService: FixturesNetworkProtocol {
+class LeaguesDetailsNetworkService: LeaguesDetailsNetworkProtocol {
     static func fetchUpcommingEvents(from: String, to: String, for sport: String,leagueId:String,completionHandler: @escaping (FixturesResponse?) -> Void) {
         
         let parameters = ["met": "Fixtures","from": from,
                           "to": to, "leagueId": leagueId]
-        guard let url = createURL(sport: sport.lowercased(), endpoint: APIConstants.Endpoints.fixtures, parameters: parameters) else {
+        guard let url = AppFunctions.createURL(sport: sport.lowercased(), endpoint: APIConstants.Endpoints.fixtures, parameters: parameters) else {
                print("Invalid URL")
                completionHandler(nil)
                return
@@ -37,18 +32,34 @@ class FixturesNetworkService: FixturesNetworkProtocol {
         }
     }
     
-    private static func createURL(sport: String, endpoint: String, parameters: [String: String]) -> URL? {
-        var components = URLComponents(string: "\(APIConstants.baseHost)/\(sport)/")
-        var queryItems = [URLQueryItem(name: "APIkey", value: APIConstants.apiKey)]
+    static func fetchTeams(for sport: String, leagueId: String, completionHandler: @escaping (TeamsResponse?) -> Void) {
         
-        for (key, value) in parameters {
-            queryItems.append(URLQueryItem(name: key, value: value))
+        let parameters = ["met": "Teams","leagueId": leagueId]
+        
+        guard let url = AppFunctions.createURL(
+            sport: sport.lowercased(),
+            endpoint: APIConstants.Endpoints.teams,
+            parameters: parameters
+        ) else {
+            print("Invalid URL")
+            completionHandler(nil)
+            return
         }
-        components?.queryItems = queryItems
-        print("URL: \(components?.url?.absoluteString ?? "Invalid URL")")
 
-        return components?.url
+        AF.request(url).responseDecodable(of: TeamsResponse.self) { response in
+            switch response.result {
+            case .success(let teamsResponse):
+                print("Teams Response: \(teamsResponse)")
+                completionHandler(teamsResponse)
+            case .failure(let error):
+                print("Alamofire error in teams: \(error)")
+                completionHandler(nil)
+            }
+        }
     }
+
+    
+   
 
 }
 
