@@ -9,7 +9,8 @@ import UIKit
 import Kingfisher
 class LeaguesTableViewController: UITableViewController, LeaguesProtocol {
     
-    var sport:String?
+    var sport:String = ""
+    
     func renderToView(result: LeaguesResponse) {
         DispatchQueue.main.async {
             self.leagues = result.result
@@ -26,12 +27,6 @@ class LeaguesTableViewController: UITableViewController, LeaguesProtocol {
         
         let nib = UINib(nibName: "LeagueTableViewCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "cell")
-        
-        guard let sport = sport else {
-                print("Sport is nil")
-                return
-            }
-        
         
         let fooballLeaguesPresenter = LeaguesPresnter(leagueVC: self)
         fooballLeaguesPresenter.getFootballLeagues(for : sport)
@@ -74,7 +69,11 @@ class LeaguesTableViewController: UITableViewController, LeaguesProtocol {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let storyboard = UIStoryboard(name: "LeagueDetails", bundle: nil)
+      
         if let detailsVC = storyboard.instantiateViewController(withIdentifier: "LeagueDetailsScreen") as? LeagueDetailsCollectionViewController {
+         
+            detailsVC.leagueId = String(leagues[indexPath.row].league_key)
+            detailsVC.sportType = sport
             self.navigationController?.pushViewController(detailsVC, animated: true)
             
         }

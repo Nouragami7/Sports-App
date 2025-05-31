@@ -9,20 +9,42 @@ import UIKit
 
 private let reuseIdentifier = "Cell"
 
-class LeagueDetailsCollectionViewController: UICollectionViewController {
-
+class LeagueDetailsCollectionViewController: UICollectionViewController, DetailsProtocol  {
+   
+    var leagueId: String = ""
+    var sportType:String = ""
+    var presenter: LeaguesDetailsPresnter!
+    var fixtures: [Fixture] = []
+    var pastEvents:[Fixture] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        presenter = LeaguesDetailsPresnter(detailsVC: self)
+        DispatchQueue.main.async {
+            self.presenter.getUpcomingFixtures(
+                from: "2025-03-01",
+                to: "2025-03-10",
+                sport: self.sportType,
+                leagueId: self.leagueId)
+            
+            self.presenter.getPastFixtures(
+                from: "2025-02-01",
+                to: "2025-02-28",
+                sport: self.sportType,
+                leagueId: self.leagueId)
+            
+        }
+
         let nib = UINib(nibName: "UpCommingEventsCollectionViewCell", bundle: nil)
         collectionView.register(nib, forCellWithReuseIdentifier: "upcommingCell")
-        
         
         let layout = UICollectionViewCompositionalLayout {sectionIndex,enviroment in
                 switch sectionIndex {
                 case 0 :
                     return self.upCommingEventsSection()
                 case 1 :
-                    return self.upCommingEventsSection()
+                    return self.pastEventsSection()
                 default:
                     return self.upCommingEventsSection()
                 }
@@ -32,20 +54,8 @@ class LeagueDetailsCollectionViewController: UICollectionViewController {
             // Register cell classes
             self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
             
-    //    self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-
-
     }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
 
     // MARK: UICollectionViewDataSource
 
@@ -57,9 +67,9 @@ class LeagueDetailsCollectionViewController: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section{
               case 0 :
-                  return 8
+            return fixtures.isEmpty ? 1 : fixtures.count
               case 1 :
-                  return 10
+            return pastEvents.isEmpty ? 1 : pastEvents.count
               default:
                   return 12
               }
@@ -69,15 +79,78 @@ class LeagueDetailsCollectionViewController: UICollectionViewController {
        
         switch indexPath.section {
                case 0:
-                   let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "upcommingCell", for: indexPath)
-                   return cell
-               case 1:
-                   let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "teamCell", for: indexPath)
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "upcommingCell", for: indexPath) as? UpCommingEventsCollectionViewCell else {
+                     return UICollectionViewCell()
+                 }
+            
+            if fixtures.isEmpty {
+                cell.score.text = "No Upcomming Events!"
+                cell.awayTeam.isHidden = true
+                cell.homeTeam.isHidden = true
+                cell.homeTeamTitle.isHidden = true
+                cell.awayTeamTitle.isHidden = true
+                cell.eventDate.isHidden = true
+                cell.eventTitle.isHidden = true
+                return cell
+                
+            }
+            else{
+                let fixture = fixtures[indexPath.row]
+                  
+                  if let homeTeamUrl = URL(string: fixture.home_team_logo ?? " "){
+                      cell.homeTeam.kf.setImage(with: homeTeamUrl, placeholder: UIImage(systemName: "league"))
+                  }
+                  if let awayTeamUrl = URL(string: fixture.away_team_logo ?? " "){
+                      cell.awayTeam.kf.setImage(with: awayTeamUrl, placeholder: UIImage(systemName: "league"))
+                  }
+                    cell.homeTeamTitle.text = fixture.event_home_team
+                    cell.awayTeamTitle.text = fixture.event_away_team
+                    cell.eventDate.text = fixture.event_date
+                    cell.eventTitle.text = fixture.league_name
+                         return cell
+            }
+        case 1:
+            
+         
+
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "upcommingCell", for: indexPath) as? UpCommingEventsCollectionViewCell else {
+                     return UICollectionViewCell()
+                 }
+            
+            
+            if pastEvents.isEmpty {
+                cell.score.text = "No Upcomming Events!"
+                cell.awayTeam.isHidden = true
+                cell.homeTeam.isHidden = true
+                cell.homeTeamTitle.isHidden = true
+                cell.awayTeamTitle.isHidden = true
+                cell.eventDate.isHidden = true
+                cell.eventTitle.isHidden = true
+                return cell
+                
+            }
+            else{
+                let fixture = pastEvents[indexPath.row]
+                  
+                  if let homeTeamUrl = URL(string: fixture.home_team_logo ?? " "){
+                      cell.homeTeam.kf.setImage(with: homeTeamUrl, placeholder: UIImage(systemName: "league"))
+                  }
+                  if let awayTeamUrl = URL(string: fixture.away_team_logo ?? " "){
+                      cell.awayTeam.kf.setImage(with: awayTeamUrl, placeholder: UIImage(systemName: "league"))
+                  }
+                    cell.homeTeamTitle.text = fixture.event_home_team
+                    cell.awayTeamTitle.text = fixture.event_away_team
+                    cell.eventDate.text = fixture.event_date
+                    cell.eventTitle.text = fixture.league_name
+                cell.score.text = fixture.event_final_result
+                         return cell
+            }
+          
+        default:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "matchCell", for: indexPath)
             return cell
-               default:
-                   let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "matchCell", for: indexPath)
-            return cell
-               }
+            
+        }
  
     }
 
@@ -110,7 +183,57 @@ class LeagueDetailsCollectionViewController: UICollectionViewController {
            return section
        }
        
+    func pastEventsSection() -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(150))
+        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
+        group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 15, trailing: 0)
+        
+        let section = NSCollectionLayoutSection(group: group)
+        section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 15, bottom: 10, trailing: 15)
+        section.orthogonalScrollingBehavior = .none
+        section.interGroupSpacing = 15
+       
+        return section
+    }
+
+    func renderPastEventsToView(result: FixturesResponse) {
+        DispatchQueue.main.async {
+            if let fixtures = result.result, !fixtures.isEmpty {
+                self.pastEvents = fixtures
+                self.collectionView.reloadData()
+            } else {
+                self.pastEvents = []
+                self.collectionView.reloadData()
+                print("No upcoming events found.")
+                
+            }
+        }
+    }
     
+    
+ 
+    
+    func renderToView(result: FixturesResponse) {
+        DispatchQueue.main.async {
+            if let fixtures = result.result, !fixtures.isEmpty {
+                self.fixtures = fixtures
+                self.collectionView.reloadData()
+            } else {
+                self.fixtures = []
+                self.collectionView.reloadData()
+                print("No upcoming events found.")
+                
+            }
+
+        }
+        fixtures.forEach {
+            print("\($0.event_home_team ?? "") vs \($0.event_away_team ?? "") on \($0.event_date ?? "")")
+        }
+    }
+
     
     // MARK: UICollectionViewDelegate
 
