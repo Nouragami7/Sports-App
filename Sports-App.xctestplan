@@ -1,0 +1,37 @@
+{
+  "configurations" : [
+    {
+      "id" : "90BC9505-EFC2-4D59-97C2-369405D77763",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:Sports-App.xcodeproj",
+      "identifier" : "22DD91152DE8904500BBB758",
+      "name" : "Sports-App"
+    }
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:Sports-App.xcodeproj",
+        "identifier" : "22DD912E2DE8904700BBB758",
+        "name" : "Sports-AppTests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:Sports-App.xcodeproj",
+        "identifier" : "22DD91382DE8904700BBB758",
+        "name" : "Sports-AppUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

@@ -29,7 +29,7 @@ struct Fixture: Decodable {
     let country_key: String?
     let country_logo: String?
 
-    let sportType: String? // optional local field, not from API
+    let sportType: String? 
 
     enum CodingKeys: String, CodingKey {
         case event_key, event_date, event_time, event_home_team, event_away_team, event_final_result, event_status, event_stadium, event_referee, event_round, event_season, event_live, event_home_team_id, event_away_team_id, home_team_logo, away_team_logo, league_name, league_key, league_id, league_logo, country_name, country_key, country_logo, sportType

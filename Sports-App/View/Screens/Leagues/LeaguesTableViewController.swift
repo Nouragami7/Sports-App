@@ -71,7 +71,6 @@ class LeaguesTableViewController: UITableViewController, LeaguesProtocol {
         let storyboard = UIStoryboard(name: "LeagueDetails", bundle: nil)
       
         if let detailsVC = storyboard.instantiateViewController(withIdentifier: "LeagueDetailsScreen") as? LeagueDetailsCollectionViewController {
-         
             detailsVC.leagueId = String(leagues[indexPath.row].league_key)
             detailsVC.sportType = sport
             self.navigationController?.pushViewController(detailsVC, animated: true)
