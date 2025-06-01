@@ -22,7 +22,8 @@ class LeaguesTableViewController: UITableViewController, LeaguesProtocol {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        tableView.separatorStyle = .none
+
         self.title = "Leagues"
         
         let nib = UINib(nibName: "LeagueTableViewCell", bundle: nil)
@@ -64,7 +65,7 @@ class LeaguesTableViewController: UITableViewController, LeaguesProtocol {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+        return 120
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -77,6 +78,48 @@ class LeaguesTableViewController: UITableViewController, LeaguesProtocol {
             
         }
     }
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let verticalPadding: CGFloat = 8
+        let horizontalPadding: CGFloat = 16
+
+        // Create background view with padding
+        let backgroundView = UIView(frame: CGRect(
+            x: horizontalPadding,
+            y: verticalPadding,
+            width: tableView.bounds.width - 2 * horizontalPadding,
+            height: cell.contentView.frame.height - 2 * verticalPadding
+        ))
+
+        backgroundView.backgroundColor = .clear
+
+        // Apply shadow and corner styling here if needed
+        cell.contentView.layer.cornerRadius = 12
+        cell.contentView.layer.borderWidth = 1
+        cell.contentView.layer.borderColor = UIColor(named: "DarkPurple")?.cgColor ?? UIColor.white.cgColor
+        cell.contentView.layer.masksToBounds = true
+
+        cell.backgroundView = backgroundView
+        cell.layer.shadowColor = UIColor.black.cgColor
+        cell.layer.shadowOffset = CGSize(width: 0, height: 2)
+        cell.layer.shadowOpacity = 0.3
+        cell.layer.shadowRadius = 4
+        cell.layer.masksToBounds = false
+
+    }
+
+
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 200 // space between cells
+    }
+
+    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let spacer = UIView()
+        
+        spacer.backgroundColor = .clear // or custom color if needed
+        return spacer
+    }
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
