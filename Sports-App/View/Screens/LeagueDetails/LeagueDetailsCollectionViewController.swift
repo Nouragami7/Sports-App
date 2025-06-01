@@ -24,23 +24,24 @@ class LeagueDetailsCollectionViewController: UICollectionViewController, Details
         presenter = LeaguesDetailsPresnter(detailsVC: self)
         DispatchQueue.main.async {
             self.presenter.getUpcomingFixtures(
-                from: "2025-03-01",
-                to: "2025-03-10",
+                from: "2025-06-02",
+                to: "2025-12-30",
                 sport: self.sportType,
                 leagueId: self.leagueId)
             
             self.presenter.getPastFixtures(
-                from: "2025-02-01",
-                to: "2025-02-28",
+                from: "2025-01-01",
+                to: "2025-06-01",
                 sport: self.sportType,
                 leagueId: self.leagueId)
             
             self.presenter.getTeams(sport: self.sportType, leagueId: self.leagueId)
             
         }
-
-        let nib = UINib(nibName: "UpCommingEventsCollectionViewCell", bundle: nil)
-        collectionView.register(nib, forCellWithReuseIdentifier: "upcommingCell")
+        let upcomminghNib = UINib(nibName: "UpCommingEventsCollectionViewCell", bundle: nil)
+        collectionView.register(upcomminghNib, forCellWithReuseIdentifier: "upcommingCell")
+        let matchNib = UINib(nibName: "PastMatchEventCollectionViewCell", bundle: nil)
+        collectionView.register(matchNib, forCellWithReuseIdentifier: "matchCell")
         
         let teamNib = UINib(nibName: "TeamCollectionViewCell", bundle: nil)
         collectionView.register(teamNib, forCellWithReuseIdentifier: "teamCell")
@@ -57,7 +58,6 @@ class LeagueDetailsCollectionViewController: UICollectionViewController, Details
             }
             collectionView.setCollectionViewLayout(layout, animated: true)
             
-            // Register cell classes
             self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
             
     }
@@ -92,41 +92,29 @@ class LeagueDetailsCollectionViewController: UICollectionViewController, Details
                 return UICollectionViewCell()
             }
             
-            if fixtures.isEmpty {
-                cell.score.text = "No"
-                cell.awayTeam.isHidden = true
-                cell.homeTeam.isHidden = true
-                cell.homeTeamTitle.isHidden = true
-                cell.awayTeamTitle.isHidden = true
-                cell.eventDate.isHidden = true
-                cell.eventTitle.isHidden = true
-                return cell
-                
+                        if fixtures.isEmpty {
+                            cell.score.text = "No"
+                            cell.awayTeam.isHidden = true
+                            cell.homeTeam.isHidden = true
+                            cell.homeTeamTitle.isHidden = true
+                            cell.awayTeamTitle.isHidden = true
+                            cell.eventDate.isHidden = true
+                            cell.eventTitle.isHidden = true
+                            return cell
+            
+                        }
+                        else{
+                            let fixture = fixtures[indexPath.row]
+            
+                            cell.configureUpcommingEentsCell(hTeam: fixture.event_home_team, hLogo: fixture.home_team_logo, aTeam: fixture.event_away_team , aLogo: fixture.away_team_logo, mDate: fixture.event_date, eventTitle: fixture.league_name)
             }
-            else{
-                let fixture = fixtures[indexPath.row]
-                
-                if let homeTeamUrl = URL(string: fixture.home_team_logo ?? " "){
-                    cell.homeTeam.kf.setImage(with: homeTeamUrl, placeholder: UIImage(systemName: "league"))
-                }
-                if let awayTeamUrl = URL(string: fixture.away_team_logo ?? " "){
-                    cell.awayTeam.kf.setImage(with: awayTeamUrl, placeholder: UIImage(systemName: "league"))
-                }
-                cell.homeTeamTitle.text = fixture.event_home_team
-                cell.awayTeamTitle.text = fixture.event_away_team
-                cell.eventDate.text = fixture.event_date
-                cell.eventTitle.text = fixture.league_name
-                cell.score.text = "VS"
-                return cell
-            }
+        
+                 return cell
+             
         case 1:
-            
-            
-            
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "upcommingCell", for: indexPath) as? UpCommingEventsCollectionViewCell else {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "matchCell", for: indexPath) as? PastMatchEventCollectionViewCell else {
                 return UICollectionViewCell()
             }
-            
             
             if pastEvents.isEmpty {
                 cell.score.text = "No"
@@ -141,18 +129,7 @@ class LeagueDetailsCollectionViewController: UICollectionViewController, Details
             }
             else{
                 let fixture = pastEvents[indexPath.row]
-                
-                if let homeTeamUrl = URL(string: fixture.home_team_logo ?? " "){
-                    cell.homeTeam.kf.setImage(with: homeTeamUrl, placeholder: UIImage(systemName: "league"))
-                }
-                if let awayTeamUrl = URL(string: fixture.away_team_logo ?? " "){
-                    cell.awayTeam.kf.setImage(with: awayTeamUrl, placeholder: UIImage(systemName: "league"))
-                }
-                cell.homeTeamTitle.text = fixture.event_home_team
-                cell.awayTeamTitle.text = fixture.event_away_team
-                cell.eventDate.text = fixture.event_date
-                cell.eventTitle.text = fixture.league_name
-                cell.score.text = fixture.event_final_result
+                cell.configurePastMatchCell(hTeam: fixture.event_home_team, hLogo: fixture.home_team_logo, aTeam: fixture.event_away_team , aLogo: fixture.away_team_logo, mDate: fixture.event_date, mScore: fixture.event_final_result, eventTitle: fixture.league_name)
                 return cell
             }
             
@@ -187,19 +164,24 @@ class LeagueDetailsCollectionViewController: UICollectionViewController, Details
         }
     }
     
-
     func upCommingEventsSection() -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1),
+            heightDimension: .fractionalHeight(1)
+        )
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(150))
+
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(0.85),
+            heightDimension: .absolute(160)
+        )
         let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
-        group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 15, trailing: 0)
-        
+
+        group.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 0, bottom: 5, trailing: 0)
+
         let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 15, bottom: 10, trailing: 15)
-        
-        section.interGroupSpacing = 15
+        section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 15, bottom: 20, trailing: 15)
+        section.interGroupSpacing = 10
         section.orthogonalScrollingBehavior = .continuous
 
         return section
@@ -212,7 +194,7 @@ class LeagueDetailsCollectionViewController: UICollectionViewController, Details
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
-                                               heightDimension: .absolute(170)) // Increase from 150
+                                               heightDimension: .absolute(170))
         let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
         group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 8, trailing: 0)
         
