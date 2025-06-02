@@ -117,7 +117,7 @@ class LeagueDetailsCollectionViewController: UICollectionViewController, Details
             }
             
             if pastEvents.isEmpty {
-                cell.score.text = "No"
+                cell.score.text = "No events"
                 cell.awayTeam.isHidden = true
                 cell.homeTeam.isHidden = true
                 cell.homeTeamTitle.isHidden = true
