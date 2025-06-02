@@ -9,6 +9,7 @@ import UIKit
 
 class PlayerCollectionViewCell: UICollectionViewCell {
 
+    @IBOutlet weak var playerType: UILabel!
     @IBOutlet weak var playerRating: UILabel!
     @IBOutlet weak var playerAge: UILabel!
     @IBOutlet weak var playerNumber: UILabel!
@@ -17,16 +18,17 @@ class PlayerCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         contentView.layer.cornerRadius = 16
-        contentView.layer.masksToBounds = false
-        
-               contentView.layer.borderWidth = 1
-               contentView.layer.borderColor = UIColor.white.cgColor
-               contentView.layer.masksToBounds = true
-               layer.shadowOpacity = 1
-               layer.shadowColor = nil
-               layer.cornerRadius = 16
-               layer.masksToBounds = true
+              contentView.layer.borderWidth = 1
+        contentView.layer.borderColor = UIColor(red: 30/255, green: 10/255, blue: 100/255, alpha: 0.3).cgColor
+              contentView.layer.masksToBounds = true
 
+              // Shadow (elevation) on the cell layer
+              layer.cornerRadius = 16
+              layer.shadowColor = UIColor.black.cgColor
+              layer.shadowOpacity = 0.2
+              layer.shadowOffset = CGSize(width: 0, height: 4)
+              layer.shadowRadius = 6
+              layer.masksToBounds = false // Important: let the shadow show
 
     }
     

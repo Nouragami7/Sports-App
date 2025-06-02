@@ -20,7 +20,6 @@ class PastMatchEventCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        // MARK: - Background Gradient
         let gradientLayer = CAGradientLayer()
         gradientLayer.colors = [
             UIColor(red: 90/255, green: 60/255, blue: 130/255, alpha: 1).cgColor,
@@ -36,7 +35,6 @@ class PastMatchEventCollectionViewCell: UICollectionViewCell {
         contentView.layer.sublayers?.removeAll(where: { $0 is CAGradientLayer })
         contentView.layer.insertSublayer(gradientLayer, at: 0)
 
-        // MARK: - Shadow and Corners
         contentView.layer.cornerRadius = 16
         contentView.layer.masksToBounds = false
         contentView.layer.shadowColor = UIColor.black.cgColor
@@ -47,22 +45,18 @@ class PastMatchEventCollectionViewCell: UICollectionViewCell {
         layer.cornerRadius = 16
         layer.masksToBounds = true
 
-        // MARK: - Score Styling
         score.font = UIFont.boldSystemFont(ofSize: 28)
         score.textColor = .white
         score.textAlignment = .center
 
-        // MARK: - Event Date Styling
         eventDate.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
         eventDate.textColor = .white
         eventDate.textAlignment = .center
     
 
-        // MARK: - Event Title
         eventTitle.font = UIFont.boldSystemFont(ofSize: 16)
         eventTitle.textColor = .white
 
-        // MARK: - Team Titles
         homeTeamTitle.font = UIFont.boldSystemFont(ofSize: 16)
         awayTeamTitle.font = UIFont.boldSystemFont(ofSize: 16)
         homeTeamTitle.textColor = .white
@@ -72,7 +66,6 @@ class PastMatchEventCollectionViewCell: UICollectionViewCell {
         
         override func prepareForReuse() {
             super.prepareForReuse()
-            // Reset state
             score.isHidden = false
             homeTeam.isHidden = false
             awayTeam.isHidden = false
@@ -83,7 +76,6 @@ class PastMatchEventCollectionViewCell: UICollectionViewCell {
             score.text = ""
         }
 
-        // MARK: - Configure Past Match Cell
     func configurePastMatchCell(hTeam: String?, hLogo: String?, aTeam: String?, aLogo: String?, mDate: String?, mScore: String?, eventTitle: String?) {
             homeTeamTitle.text = hTeam
             awayTeamTitle.text = aTeam

@@ -100,7 +100,8 @@ class TeamDetailsCollectionViewController: UICollectionViewController {
                cell.playerName.text = player.player_name
                cell.playerNumber.text = player.player_number ?? "No"
                cell.playerAge.text = player.player_age
-               cell.playerRating.text = player.player_match_played
+               cell.playerRating.text = player.player_match_played ?? "Rating"
+               cell.playerType.text = player.player_type ?? "Player"
 
                if let imageUrlString = player.player_image,
                   let imageUrl = URL(string: imageUrlString) {

@@ -19,21 +19,14 @@ class LeagueTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        // Rounded corners
         contentView.layer.cornerRadius = 12
         contentView.layer.masksToBounds = true
-
-        // Border with dark purple color
         contentView.layer.borderWidth = 1.5
         contentView.layer.borderColor = UIColor(red: 60/255, green: 30/255, blue: 100/255, alpha: 1).cgColor
-
-        // Shadow (3D elevation)
-        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowColor = UIColor.lightGray.cgColor
         layer.shadowOpacity = 0.25
         layer.shadowOffset = CGSize(width: 0, height: 4)
-        layer.shadowRadius = 6
-
-        // Make shadow show beyond contentView
+        layer.shadowRadius = 4
         layer.masksToBounds = false
         
         let gradient = CAGradientLayer()
@@ -47,7 +40,6 @@ class LeagueTableViewCell: UITableViewCell {
 
         
     }
-
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
