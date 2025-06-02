@@ -11,7 +11,7 @@ import Alamofire
 class LeaguesNetworkService: LeaguesNetworkProtocol {
     static func fetchLeagues(for sport: String,completionHandler: @escaping (LeaguesResponse?) -> Void) {
         let parameters = ["met": "Leagues"]
-        guard let url = createURL(sport: sport.lowercased(), endpoint: APIConstants.Endpoints.leagues, parameters: parameters) else {
+        guard let url = AppFunctions.createURL(sport: sport.lowercased(), endpoint: APIConstants.Endpoints.leagues, parameters: parameters) else {
                print("Invalid URL")
                completionHandler(nil)
                return
@@ -29,16 +29,6 @@ class LeaguesNetworkService: LeaguesNetworkProtocol {
         }
     }
     
-    private static func createURL(sport: String, endpoint: String, parameters: [String: String]) -> URL? {
-        var components = URLComponents(string: "\(APIConstants.baseHost)/\(sport)/")
-        var queryItems = [URLQueryItem(name: "APIkey", value: APIConstants.apiKey)]
-        
-        for (key, value) in parameters {
-            queryItems.append(URLQueryItem(name: key, value: value))
-        }
-        components?.queryItems = queryItems
-        return components?.url
-    }
 
 }
 

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="TeamCollectionViewCell" customModule="Sports_App" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="147" height="161"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="147" height="161"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="UnH-DJ-5Vl">
+                        <rect key="frame" x="16" y="16" width="115" height="90"/>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="team nameteam nameteam nameteam nameteam nameteam nameteam nameteam nameteam nameteam nameteam nameteam name" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p16-VN-nPC">
+                        <rect key="frame" x="8" y="114" width="131" height="40"/>
+                        <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                        <size key="shadowOffset" width="0.0" height="0.0"/>
+                    </label>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstItem="UnH-DJ-5Vl" firstAttribute="height" secondItem="p16-VN-nPC" secondAttribute="height" multiplier="5.02326" constant="-110.93023255813961" id="80v-JL-8ao"/>
+                <constraint firstItem="UnH-DJ-5Vl" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="16" id="DOW-07-XLY"/>
+                <constraint firstItem="p16-VN-nPC" firstAttribute="top" secondItem="UnH-DJ-5Vl" secondAttribute="bottom" constant="8" id="I5K-zy-DQ6"/>
+                <constraint firstItem="UnH-DJ-5Vl" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="16" id="IwV-ki-E3a"/>
+                <constraint firstItem="p16-VN-nPC" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="8" id="b6I-lw-cSY"/>
+                <constraint firstAttribute="trailing" secondItem="UnH-DJ-5Vl" secondAttribute="trailing" constant="16" id="jCu-46-msh"/>
+                <constraint firstAttribute="bottom" secondItem="p16-VN-nPC" secondAttribute="bottom" constant="7" id="ltv-Ac-n8o"/>
+                <constraint firstAttribute="trailing" secondItem="p16-VN-nPC" secondAttribute="trailing" constant="8" id="nUK-kP-bK9"/>
+                <constraint firstItem="UnH-DJ-5Vl" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="ooj-Zw-MXE"/>
+            </constraints>
+            <size key="customSize" width="147" height="161"/>
+            <connections>
+                <outlet property="teamLogo" destination="UnH-DJ-5Vl" id="Bih-JX-UR3"/>
+                <outlet property="teamName" destination="p16-VN-nPC" id="NIA-qu-nrL"/>
+            </connections>
+            <point key="canvasLocation" x="130.53435114503816" y="6.6901408450704229"/>
+        </collectionViewCell>
+    </objects>
+</document>
