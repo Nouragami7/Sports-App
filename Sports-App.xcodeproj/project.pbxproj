@@ -366,11 +366,11 @@
 			children = (
 				22DD917A2DE8CCC300BBB758 /* LeagueTableViewCell.xib */,
 				8A1989052DEA0D1D00957502 /* PastMatchEventCollectionViewCell.xib */,
-				8AD0EE3A2DEA6DBF00EFD31E /* PlaceholderCollectionViewCell.xib */,
 				226E24172DEB3740003D2CBB /* TeamCollectionViewCell.xib */,
 				226E24262DEB5B8C003D2CBB /* TeamLogoCollectionViewCell.xib */,
 				226E24302DEB6C90003D2CBB /* PlayerCollectionViewCell.xib */,
 				8A3C0F942DED075C006D77D3 /* UpCommingEventsCollectionViewCell.xib */,
+				8AD0EE3A2DEA6DBF00EFD31E /* PlaceholderCollectionViewCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";

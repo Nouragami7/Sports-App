@@ -16,7 +16,18 @@ class PlayerCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var playerImage: UIImageView!
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
-    }
+        contentView.layer.cornerRadius = 16
+        contentView.layer.masksToBounds = false
+        
+               contentView.layer.borderWidth = 1
+               contentView.layer.borderColor = UIColor.white.cgColor
+               contentView.layer.masksToBounds = true
+               layer.shadowOpacity = 1
+               layer.shadowColor = nil
+               layer.cornerRadius = 16
+               layer.masksToBounds = true
 
+
+    }
+    
 }

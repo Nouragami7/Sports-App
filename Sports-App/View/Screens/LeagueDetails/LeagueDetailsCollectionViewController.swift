@@ -156,8 +156,8 @@ class LeagueDetailsCollectionViewController: UICollectionViewController, Details
             let storyboard = UIStoryboard(name: "TeamDetails", bundle: nil)
             if let teamDetailsVC = storyboard.instantiateViewController(withIdentifier: "teamDetailsScreen") as? TeamDetailsCollectionViewController {
                 let selectedTeam = teams[indexPath.row]
-                teamDetailsVC.coach = selectedTeam.coaches
-                teamDetailsVC.players = selectedTeam.players
+                teamDetailsVC.coach = selectedTeam.coaches  ?? []
+                teamDetailsVC.players = selectedTeam.players ?? []
                 teamDetailsVC.teamName = selectedTeam.team_name
                 teamDetailsVC.teamLogo = selectedTeam.team_logo
                 teamDetailsVC.sportType = sportType

@@ -46,6 +46,7 @@ class LeaguesDetailsPresnter {
                 return
             }
             self.detailsVC?.renderTeams(result: response!)
+            print("\(response) ++++sa3dawy2++++++++++++++++")
         }
     }
 

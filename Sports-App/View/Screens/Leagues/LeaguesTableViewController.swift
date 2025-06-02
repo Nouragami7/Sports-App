@@ -107,18 +107,7 @@ class LeaguesTableViewController: UITableViewController, LeaguesProtocol {
         cell.layer.masksToBounds = false
 
     }
-
-
-    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 200 // space between cells
-    }
-
-    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let spacer = UIView()
-        
-        spacer.backgroundColor = .clear // or custom color if needed
-        return spacer
-    }
+    
     
     /*
     // Override to support conditional editing of the table view.

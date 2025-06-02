@@ -45,6 +45,8 @@ class LeaguesDetailsNetworkService: LeaguesDetailsNetworkProtocol {
             completionHandler(nil)
             return
         }
+        print("\(url)+++++++++++++++sa3dawy++++++++++++")
+
 
         AF.request(url).responseDecodable(of: TeamsResponse.self) { response in
             switch response.result {

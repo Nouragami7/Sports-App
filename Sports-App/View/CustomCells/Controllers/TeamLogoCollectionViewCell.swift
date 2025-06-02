@@ -25,14 +25,14 @@ class TeamLogoCollectionViewCell: UICollectionViewCell {
 
         layer.cornerRadius = 16
         layer.masksToBounds = true
-        teamLogo.clipsToBounds = true
+//        teamLogo.clipsToBounds = true
 
 
     }
     override func layoutSubviews() {
             super.layoutSubviews()
-            
-            teamLogo.layer.cornerRadius = teamLogo.frame.width / 2
+
+            teamLogo.layer.cornerRadius = 30
         }
 
           }
