@@ -15,9 +15,15 @@ class HomeCollectionViewController: UICollectionViewController , UICollectionVie
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = "Sports"
-        self.collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+       // self.collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
    
-    
+        // Configure layout
+          /*    if let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+                  layout.minimumLineSpacing = 16       // Vertical spacing between rows
+                  layout.minimumInteritemSpacing = 8   // Horizontal spacing between columns
+                  layout.scrollDirection = .vertical
+                  layout.sectionInset = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+              }*/
      }
 
     // MARK: UICollectionViewDataSource
@@ -33,16 +39,36 @@ class HomeCollectionViewController: UICollectionViewController , UICollectionVie
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "sportCell", for: indexPath)
-
-        cell.layer.borderWidth = 1
-        cell.layer.cornerRadius = 24
-        cell.layer.borderColor = UIColor.blue.cgColor
         
-        (cell.viewWithTag(2) as! UILabel).text = sports[indexPath.item].name
-        let sportImage = UIImage(named:sports[indexPath.item].imageName)
-        (cell.viewWithTag(1)as! UIImageView).image = sportImage
-        
-    
+               // Configure the cell appearance
+               cell.layer.borderWidth = 1
+               cell.layer.borderColor = UIColor.purple.cgColor
+               cell.layer.cornerRadius = 24
+               cell.layer.shadowColor = UIColor.black.cgColor
+               cell.layer.shadowOpacity = 0.2
+               cell.layer.shadowOffset = CGSize(width: 0, height: 3)
+               cell.layer.shadowRadius = 5
+               cell.layer.masksToBounds = false
+               
+               // Configure image view
+               if let imageView = cell.viewWithTag(1) as? UIImageView {
+                   imageView.image = UIImage(named: sports[indexPath.item].imageName)
+                   imageView.layer.shadowColor = UIColor.black.cgColor
+                   imageView.layer.shadowOpacity = 0.2
+                   imageView.layer.shadowOffset = CGSize(width: 0, height: 3)
+                   imageView.layer.shadowRadius = 5
+                   imageView.layer.masksToBounds = false
+               }
+               
+               // Configure title label
+               if let titleLabel = cell.viewWithTag(2) as? UILabel {
+                   titleLabel.text = sports[indexPath.item].name
+                   titleLabel.backgroundColor = UIColor.purple
+                   titleLabel.textColor = .white
+                   titleLabel.layer.cornerRadius = 12
+                   titleLabel.clipsToBounds = true
+               }
+               
         return cell
     }
     
