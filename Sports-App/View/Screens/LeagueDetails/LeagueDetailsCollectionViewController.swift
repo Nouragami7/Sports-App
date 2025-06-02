@@ -139,6 +139,7 @@ class LeagueDetailsCollectionViewController: UICollectionViewController, Details
             }
             let teams = teams[indexPath.row]
             cell.configure(with: teams)
+        
             return cell
             
         default:
@@ -159,6 +160,7 @@ class LeagueDetailsCollectionViewController: UICollectionViewController, Details
                 teamDetailsVC.players = selectedTeam.players
                 teamDetailsVC.teamName = selectedTeam.team_name
                 teamDetailsVC.teamLogo = selectedTeam.team_logo
+                teamDetailsVC.sportType = sportType
                 self.navigationController?.pushViewController(teamDetailsVC, animated: true)
             }
         }

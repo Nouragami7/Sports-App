@@ -15,6 +15,7 @@ class TeamDetailsCollectionViewController: UICollectionViewController {
     var players : [Players] = []
     var teamLogo : String?
     var teamName : String?
+    var sportType : String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,6 +77,7 @@ class TeamDetailsCollectionViewController: UICollectionViewController {
             }
 
             cell.teamName.text = teamName
+            cell.sportType.text = "\(sportType ?? "Sport club") club"
 
             if let teamLogoUrl = URL(string: teamLogo ?? "") {
                 cell.teamLogo.kf.setImage(with: teamLogoUrl, placeholder: UIImage(systemName: "league"))
@@ -110,34 +112,33 @@ class TeamDetailsCollectionViewController: UICollectionViewController {
         }
     }
 
-    func teamsInfo()-> NSCollectionLayoutSection {
-           let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1)
-                                                 , heightDimension: .fractionalHeight(1))
-           let item = NSCollectionLayoutItem(layoutSize: itemSize)
-           
-           let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.7)
-                                                  , heightDimension: .absolute(225))
-           let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize
-                                                          , subitems: [item])
-           group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0
-                                                         , bottom: 0, trailing: 15)
-           
-           
-           let section = NSCollectionLayoutSection(group: group)
-           section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 15
-                                                           , bottom: 10, trailing: 0)
-           section.orthogonalScrollingBehavior = .continuous
-           section.visibleItemsInvalidationHandler = { (items, offset, environment) in
-                items.forEach { item in
-                let distanceFromCenter = abs((item.frame.midX - offset.x) - environment.container.contentSize.width / 2.0)
-                let minScale: CGFloat = 0.8
-                let maxScale: CGFloat = 1.0
-                let scale = max(maxScale - (distanceFromCenter / environment.container.contentSize.width), minScale)
-                item.transform = CGAffineTransform(scaleX: scale, y: scale)
-                }
-           }
-           return section
-       }
+    func teamsInfo() -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1.0),
+            heightDimension: .fractionalHeight(1.0)
+        )
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1.0),
+            heightDimension: .absolute(130)
+        )
+        let group = NSCollectionLayoutGroup.horizontal(
+            layoutSize: groupSize,
+            subitems: [item]
+        )
+
+        let section = NSCollectionLayoutSection(group: group)
+        section.contentInsets = NSDirectionalEdgeInsets(
+            top: 10, leading: 15,
+            bottom: 10, trailing: 15
+        )
+        
+        section.orthogonalScrollingBehavior = .none
+
+        return section
+    }
+
     
     
     func playersSection() -> NSCollectionLayoutSection {
