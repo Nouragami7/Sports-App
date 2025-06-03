@@ -18,13 +18,13 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="9dr-iV-gvR">
                             <size key="itemSize" width="387" height="239"/>
-                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="headerReferenceSize" width="50" height="50"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="matchCell" id="30j-tV-foA">
-                                <rect key="frame" x="3" y="0.0" width="387" height="353"/>
+                                <rect key="frame" x="3" y="50" width="387" height="353"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="eut-Lb-XS0">
                                     <rect key="frame" x="0.0" y="0.0" width="387" height="353"/>
@@ -33,7 +33,7 @@
                                 <size key="customSize" width="387" height="353"/>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="upcommingCell" id="Nmp-ul-Rrn">
-                                <rect key="frame" x="3" y="363" width="387" height="204"/>
+                                <rect key="frame" x="3" y="413" width="387" height="204"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="FAj-HX-3GD">
                                     <rect key="frame" x="0.0" y="0.0" width="387" height="204"/>
@@ -42,7 +42,7 @@
                                 <size key="customSize" width="387" height="204"/>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="teamCell" id="Zhq-M8-8da">
-                                <rect key="frame" x="1" y="577" width="391" height="216"/>
+                                <rect key="frame" x="1" y="627" width="391" height="216"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="R16-64-8U8">
                                     <rect key="frame" x="0.0" y="0.0" width="391" height="216"/>
@@ -51,6 +51,26 @@
                                 <size key="customSize" width="391" height="216"/>
                             </collectionViewCell>
                         </cells>
+                        <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="header" id="g1U-aj-xoa" customClass="SectionHeaderCollectionReusableView" customModule="Sports_App" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="393" height="50"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HS7-GR-Zym">
+                                    <rect key="frame" x="8" y="13" width="245" height="24"/>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                    <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="HS7-GR-Zym" firstAttribute="centerY" secondItem="g1U-aj-xoa" secondAttribute="centerY" id="EhE-ad-WzT"/>
+                                <constraint firstAttribute="trailing" secondItem="HS7-GR-Zym" secondAttribute="trailing" constant="140" id="mpk-Bp-Wyo"/>
+                                <constraint firstItem="HS7-GR-Zym" firstAttribute="leading" secondItem="g1U-aj-xoa" secondAttribute="leading" multiplier="0.5" constant="8" id="s4Q-IY-QUx"/>
+                            </constraints>
+                            <connections>
+                                <outlet property="titleLabel" destination="HS7-GR-Zym" id="q6D-VL-o2v"/>
+                            </connections>
+                        </collectionReusableView>
                         <connections>
                             <outlet property="dataSource" destination="0db-xk-j6x" id="8X2-qs-SNP"/>
                             <outlet property="delegate" destination="0db-xk-j6x" id="fyw-Xt-qSq"/>

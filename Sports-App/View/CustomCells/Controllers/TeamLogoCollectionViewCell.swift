@@ -33,7 +33,23 @@ class TeamLogoCollectionViewCell: UICollectionViewCell {
             super.layoutSubviews()
 
             teamLogo.layer.cornerRadius = 30
+    }
+    
+    
+    func configuerTeamDeatilCell(team:String?, sport:String?, logo:String?, coachName:Coaches?){
+        teamName.text = team
+        sportType.text = "\(sport ?? "Sport club") club"
+        
+        if let teamLogoUrl = URL(string: logo ?? "") {
+            teamLogo.kf.setImage(with: teamLogoUrl, placeholder: UIImage(systemName: "league"))
         }
+        
+        if let firstCoach = coachName {
+            teamCoach.text = firstCoach.coach_name
+        } else {
+            teamCoach.text = "No coach info"
+        }
+    }
 
-          }
+}
       

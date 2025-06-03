@@ -17,19 +17,32 @@ class PlayerCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var playerImage: UIImageView!
     override func awakeFromNib() {
         super.awakeFromNib()
+        
         contentView.layer.cornerRadius = 16
-              contentView.layer.borderWidth = 1
+        contentView.layer.borderWidth = 1
         contentView.layer.borderColor = UIColor(red: 30/255, green: 10/255, blue: 100/255, alpha: 0.3).cgColor
-              contentView.layer.masksToBounds = true
-
-              // Shadow (elevation) on the cell layer
-              layer.cornerRadius = 16
-              layer.shadowColor = UIColor.black.cgColor
-              layer.shadowOpacity = 0.2
-              layer.shadowOffset = CGSize(width: 0, height: 4)
-              layer.shadowRadius = 6
-              layer.masksToBounds = false // Important: let the shadow show
-
+        contentView.layer.masksToBounds = true
+        layer.cornerRadius = 16
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOpacity = 0.2
+        layer.shadowOffset = CGSize(width: 0, height: 4)
+        layer.shadowRadius = 6
+        layer.masksToBounds = false
+        
     }
     
+    func congiurePlayerCell(player: Players){
+        playerName.text = player.player_name
+        playerNumber.text = player.player_number ?? "No"
+        playerAge.text = player.player_age ?? "-"
+        playerRating.text = player.player_match_played ?? "Rating"
+        playerType.text = player.player_type ?? "Player"
+        
+        if let imageUrlString = player.player_image,
+           let imageUrl = URL(string: imageUrlString) {
+            playerImage.kf.setImage(with: imageUrl, placeholder: UIImage(systemName: "person.crop.circle"))
+        } else {
+            playerImage.image = UIImage(systemName: "person.crop.circle.badge.exclamationmark")
+        }
+    }
 }
