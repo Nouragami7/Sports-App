@@ -10,7 +10,7 @@ import UIKit
 private let reuseIdentifier = "Cell"
 
 class LeagueDetailsCollectionViewController: UICollectionViewController, DetailsProtocol  {
-  
+
     var leagueId: String = ""
     var sportType:String = ""
     var presenter: LeaguesDetailsPresnter!
@@ -20,14 +20,7 @@ class LeagueDetailsCollectionViewController: UICollectionViewController, Details
     var datec =  " "
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("Date= \(AppFunctions.getCurrentDate())")
-        
-        print("CurrDate= \(AppFunctions.getDate())")
-        
-        print("NexDate= \(AppFunctions.getDate(yearOffset: 1))")
-        
-        print("PrevDate= \(AppFunctions.getDate(yearOffset: -1))")
-        
+     
         presenter = LeaguesDetailsPresnter(detailsVC: self)
         DispatchQueue.main.async {
             self.presenter.getUpcomingFixtures(
@@ -52,7 +45,8 @@ class LeagueDetailsCollectionViewController: UICollectionViewController, Details
         
         let teamNib = UINib(nibName: "TeamCollectionViewCell", bundle: nil)
         collectionView.register(teamNib, forCellWithReuseIdentifier: "teamCell")
-        
+       
+
         let layout = UICollectionViewCompositionalLayout {sectionIndex,enviroment in
                 switch sectionIndex {
                 case 0 :
@@ -69,8 +63,6 @@ class LeagueDetailsCollectionViewController: UICollectionViewController, Details
             
     }
 
-
-    // MARK: UICollectionViewDataSource
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 3
@@ -192,7 +184,17 @@ class LeagueDetailsCollectionViewController: UICollectionViewController, Details
         section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 15, bottom: 20, trailing: 15)
         section.interGroupSpacing = 10
         section.orthogonalScrollingBehavior = .continuous
-
+        
+        // header
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                heightDimension: .absolute(40))
+        let header = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: headerSize,
+            elementKind: UICollectionView.elementKindSectionHeader,
+            alignment: .top
+        )
+        
+        section.boundarySupplementaryItems = [header]
         return section
     }
 
@@ -211,7 +213,16 @@ class LeagueDetailsCollectionViewController: UICollectionViewController, Details
         section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15)
         section.interGroupSpacing = 8
         section.orthogonalScrollingBehavior = .none
+        // header
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                heightDimension: .absolute(40))
+        let header = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: headerSize,
+            elementKind: UICollectionView.elementKindSectionHeader,
+            alignment: .top
+        )
         
+        section.boundarySupplementaryItems = [header]
         return section
     }
 
@@ -231,10 +242,47 @@ class LeagueDetailsCollectionViewController: UICollectionViewController, Details
         section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 15,
                                                         bottom: 10, trailing: 0)
         section.orthogonalScrollingBehavior = .continuous
+      
+        // header
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                heightDimension: .absolute(40))
+        let header = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: headerSize,
+            elementKind: UICollectionView.elementKindSectionHeader,
+            alignment: .top
+        )
         
+        section.boundarySupplementaryItems = [header]
         return section
     }
     
+    
+    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        if kind == UICollectionView.elementKindSectionHeader {
+            guard let headerView = collectionView.dequeueReusableSupplementaryView(
+                ofKind: kind,
+                withReuseIdentifier: "header",
+                for: indexPath
+            ) as? SectionHeaderCollectionReusableView else {
+                return UICollectionReusableView()
+            }
+
+            switch indexPath.section {
+            case 0:
+                headerView.titleLabel.text = "Upcoming Events"
+            case 1:
+                headerView.titleLabel.text = "Past Matches"
+            case 2:
+                headerView.titleLabel.text = "Teams"
+            default:
+                headerView.titleLabel.text = ""
+            }
+
+            return headerView
+        }
+        return UICollectionReusableView()
+    }
+
 
     func renderPastEventsToView(result: FixturesResponse) {
         DispatchQueue.main.async {
@@ -277,3 +325,4 @@ class LeagueDetailsCollectionViewController: UICollectionViewController, Details
     }
 
 }
+
