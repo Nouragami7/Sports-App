@@ -25,6 +25,9 @@
 		229ED31D2DE9D1D800250919 /* LeaguesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229ED31C2DE9D1D800250919 /* LeaguesResponse.swift */; };
 		229ED31F2DE9DDE100250919 /* LeaguesNetworkProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229ED31E2DE9DDE100250919 /* LeaguesNetworkProtocol.swift */; };
 		229ED3212DE9DE4100250919 /* LeaguesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229ED3202DE9DE4100250919 /* LeaguesPresenter.swift */; };
+		22C50EAE2DEF6F02008AD497 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 22C50EAD2DEF6F02008AD497 /* Lottie */; };
+		22C50EB22DEF7599008AD497 /* logo.json in Resources */ = {isa = PBXBuildFile; fileRef = 22C50EB12DEF7599008AD497 /* logo.json */; };
+		22C50EB42DEF79E6008AD497 /* LoadingIndicatorUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C50EB32DEF79E6008AD497 /* LoadingIndicatorUtil.swift */; };
 		22DD911A2DE8904500BBB758 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DD91192DE8904500BBB758 /* AppDelegate.swift */; };
 		22DD911C2DE8904500BBB758 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DD911B2DE8904500BBB758 /* SceneDelegate.swift */; };
 		22DD911E2DE8904500BBB758 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22DD911D2DE8904500BBB758 /* ViewController.swift */; };
@@ -98,6 +101,8 @@
 		229ED31C2DE9D1D800250919 /* LeaguesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaguesResponse.swift; sourceTree = "<group>"; };
 		229ED31E2DE9DDE100250919 /* LeaguesNetworkProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaguesNetworkProtocol.swift; sourceTree = "<group>"; };
 		229ED3202DE9DE4100250919 /* LeaguesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaguesPresenter.swift; sourceTree = "<group>"; };
+		22C50EB12DEF7599008AD497 /* logo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = logo.json; sourceTree = "<group>"; };
+		22C50EB32DEF79E6008AD497 /* LoadingIndicatorUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingIndicatorUtil.swift; sourceTree = "<group>"; };
 		22DD91162DE8904500BBB758 /* Sports-App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Sports-App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		22DD91192DE8904500BBB758 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		22DD911B2DE8904500BBB758 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -143,6 +148,7 @@
 			files = (
 				22DD91552DE8921200BBB758 /* Kingfisher in Frameworks */,
 				22DD91592DE89A9000BBB758 /* Alamofire in Frameworks */,
+				22C50EAE2DEF6F02008AD497 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -294,6 +300,7 @@
 			isa = PBXGroup;
 			children = (
 				22DD91252DE8904700BBB758 /* Assets.xcassets */,
+				22C50EB12DEF7599008AD497 /* logo.json */,
 				22DD91272DE8904700BBB758 /* LaunchScreen.storyboard */,
 			);
 			path = Resources;
@@ -322,6 +329,7 @@
 				226E240E2DEB1678003D2CBB /* Functions */,
 				22DD918B2DE8DF7300BBB758 /* Protocols */,
 				22DD918A2DE8DF6100BBB758 /* Constants */,
+				22C50EB32DEF79E6008AD497 /* LoadingIndicatorUtil.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -467,6 +475,7 @@
 			packageProductDependencies = (
 				22DD91542DE8921200BBB758 /* Kingfisher */,
 				22DD91582DE89A9000BBB758 /* Alamofire */,
+				22C50EAD2DEF6F02008AD497 /* Lottie */,
 			);
 			productName = "Sports-App";
 			productReference = 22DD91162DE8904500BBB758 /* Sports-App.app */;
@@ -543,6 +552,7 @@
 			packageReferences = (
 				22DD91532DE8921200BBB758 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				22DD91572DE89A9000BBB758 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				22C50EAC2DEF6F02008AD497 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 			);
 			productRefGroup = 22DD91172DE8904500BBB758 /* Products */;
 			projectDirPath = "";
@@ -566,6 +576,7 @@
 				226E24192DEB3740003D2CBB /* TeamCollectionViewCell.xib in Resources */,
 				8A1989072DEA0D1D00957502 /* PastMatchEventCollectionViewCell.xib in Resources */,
 				226E24322DEB6C90003D2CBB /* PlayerCollectionViewCell.xib in Resources */,
+				22C50EB22DEF7599008AD497 /* logo.json in Resources */,
 				8AD0EE3C2DEA6DBF00EFD31E /* PlaceholderCollectionViewCell.xib in Resources */,
 				8A3C0F962DED075C006D77D3 /* UpCommingEventsCollectionViewCell.xib in Resources */,
 				22DD91262DE8904700BBB758 /* Assets.xcassets in Resources */,
@@ -619,6 +630,7 @@
 				226E241E2DEB388E003D2CBB /* Teams.swift in Sources */,
 				8A457C5B2DE923DC00D090F9 /* Sport.swift in Sources */,
 				226E24182DEB3740003D2CBB /* TeamCollectionViewCell.swift in Sources */,
+				22C50EB42DEF79E6008AD497 /* LoadingIndicatorUtil.swift in Sources */,
 				8ADDE0A22DE902340083F7B1 /* HomeCollectionViewController.swift in Sources */,
 				8AD0EE342DEA500B00EFD31E /* FixturesNetoworkService.swift in Sources */,
 				8AD0EE382DEA528500EFD31E /* DetailsPresenterProtocol.swift in Sources */,
@@ -968,6 +980,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		22C50EAC2DEF6F02008AD497 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios";
+			requirement = {
+				kind = exactVersion;
+				version = 3.5.0;
+			};
+		};
 		22DD91532DE8921200BBB758 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher";
@@ -987,6 +1007,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		22C50EAD2DEF6F02008AD497 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 22C50EAC2DEF6F02008AD497 /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
+		};
 		22DD91542DE8921200BBB758 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 22DD91532DE8921200BBB758 /* XCRemoteSwiftPackageReference "Kingfisher" */;

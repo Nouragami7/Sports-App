@@ -55,7 +55,7 @@ class LeaguesTableViewController: UITableViewController, LeaguesProtocol {
            } else {
                cell.leagueCountry.text = leagues.country_name
            }
-
+     
         if let leagueUrl = URL(string: leagues.league_logo ?? " "){
             cell.leagueImage.kf.setImage(with: leagueUrl, placeholder: UIImage(systemName: "league"))
         }
