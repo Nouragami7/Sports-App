@@ -15,7 +15,12 @@ class HomeCollectionViewController: UICollectionViewController , UICollectionVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.setNavigationBarHidden(false, animated: true)
+
         self.navigationItem.title = "Sports"
+        navigationController?.setNavigationBarHidden(false, animated: true)
+
+        navigationController?.navigationBar.prefersLargeTitles = true
        // self.collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
    
         // Configure layout
