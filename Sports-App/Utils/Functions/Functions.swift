@@ -20,4 +20,31 @@ class AppFunctions{
 
         return components?.url
     }
+    
+    static func getCurrentDate() -> String {
+        
+        let date = Date()
+        let calendar = Calendar.current
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale.current
+        dateFormatter.setLocalizedDateFormatFromTemplate("yyyy-MM-dd")
+        let shortDate = dateFormatter.string(from: date)
+       return shortDate
+    }
+    
+    static func getDate(yearOffset: Int = 0) -> String {
+        let date = Date()
+        let calendar = Calendar.current
+        let dateFormatter = DateFormatter()
+        
+        
+        if let adjustedDate = calendar.date(byAdding: .year, value: yearOffset, to: date) {
+            dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            return dateFormatter.string(from: adjustedDate)
+        }
+        
+        return ""
+    }
+
 }

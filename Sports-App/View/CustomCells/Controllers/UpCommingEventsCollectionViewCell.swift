@@ -61,22 +61,35 @@ class UpCommingEventsCollectionViewCell: UICollectionViewCell {
             eventTitle.isHidden = false
             score.text = ""
         }
+    
+    func configureUpcommingEentsCell(fixture:Fixture ,sportType:String) {
+        eventDate.text = fixture.event_date
+        score.text = fixture.event_final_result
+        score.text = "VS"
+        self.eventTitle.text = fixture.league_name
 
-        func configureUpcommingEentsCell(hTeam: String?, hLogo: String?, aTeam: String?, aLogo: String?, mDate: String?, eventTitle: String?) {
-            homeTeamTitle.text = hTeam
-            awayTeamTitle.text = aTeam
-            eventDate.text = mDate
-            self.eventTitle.text = eventTitle
-            score.text = "VS"
+        if sportType == "Tennis"{
+            homeTeamTitle.text = fixture.event_first_player ?? "Player One"
+            awayTeamTitle.text = fixture.event_second_player ?? "Player Two"
+            score.text = fixture.event_final_result
 
-            if let hLogo = hLogo, let hURL = URL(string: hLogo) {
-                homeTeam.kf.setImage(with: hURL, placeholder: UIImage(systemName: "photo"))
-            }
-            if let aLogo = aLogo, let aURL = URL(string: aLogo) {
-                awayTeam.kf.setImage(with: aURL, placeholder: UIImage(systemName: "photo"))
-            }
+        }else if sportType == "Cricket"{
+            homeTeamTitle.text = fixture.event_home_team
+            awayTeamTitle.text = fixture.event_away_team
+            eventDate.text = fixture.event_date_start
+
+        }else {
+            homeTeamTitle.text = fixture.event_home_team
+            awayTeamTitle.text = fixture.event_away_team
+            eventDate.text = fixture.event_date
         }
 
-  
+            if let hLogo = fixture.home_team_logo, let hURL = URL(string: hLogo) {
+                    homeTeam.kf.setImage(with: hURL, placeholder: UIImage(systemName: "photo"))
+                }
+            if let aLogo = fixture.away_team_logo, let aURL = URL(string: aLogo) {
+                    awayTeam.kf.setImage(with: aURL, placeholder: UIImage(systemName: "photo"))
+                }
+        }
 
 }

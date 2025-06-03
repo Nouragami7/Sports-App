@@ -17,21 +17,28 @@ class LeagueDetailsCollectionViewController: UICollectionViewController, Details
     var fixtures: [Fixture] = []
     var pastEvents:[Fixture] = []
     var teams:[Teams] = []
-    
+    var datec =  " "
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("Date= \(AppFunctions.getCurrentDate())")
+        
+        print("CurrDate= \(AppFunctions.getDate())")
+        
+        print("NexDate= \(AppFunctions.getDate(yearOffset: 1))")
+        
+        print("PrevDate= \(AppFunctions.getDate(yearOffset: -1))")
         
         presenter = LeaguesDetailsPresnter(detailsVC: self)
         DispatchQueue.main.async {
             self.presenter.getUpcomingFixtures(
-                from: "2025-06-02",
-                to: "2025-12-30",
+                from: AppFunctions.getDate(),
+                to: AppFunctions.getDate(yearOffset: 1),
                 sport: self.sportType,
                 leagueId: self.leagueId)
             
             self.presenter.getPastFixtures(
-                from: "2025-01-01",
-                to: "2025-06-01",
+                from: AppFunctions.getDate(yearOffset: -1),
+                to: AppFunctions.getDate(),
                 sport: self.sportType,
                 leagueId: self.leagueId)
             
@@ -106,7 +113,7 @@ class LeagueDetailsCollectionViewController: UICollectionViewController, Details
                         else{
                             let fixture = fixtures[indexPath.row]
             
-                            cell.configureUpcommingEentsCell(hTeam: fixture.event_home_team, hLogo: fixture.home_team_logo, aTeam: fixture.event_away_team , aLogo: fixture.away_team_logo, mDate: fixture.event_date, eventTitle: fixture.league_name)
+                            cell.configureUpcommingEentsCell(fixture: fixture, sportType: sportType)
             }
         
                  return cell
@@ -129,7 +136,7 @@ class LeagueDetailsCollectionViewController: UICollectionViewController, Details
             }
             else{
                 let fixture = pastEvents[indexPath.row]
-                cell.configurePastMatchCell(hTeam: fixture.event_home_team, hLogo: fixture.home_team_logo, aTeam: fixture.event_away_team , aLogo: fixture.away_team_logo, mDate: fixture.event_date, mScore: fixture.event_final_result, eventTitle: fixture.league_name)
+                cell.configurePastMatchCell(fixture: fixture, sportType:sportType)
                 return cell
             }
             
@@ -268,36 +275,5 @@ class LeagueDetailsCollectionViewController: UICollectionViewController, Details
             
         }
     }
-    
-    // MARK: UICollectionViewDelegate
-
-    /*
-    // Uncomment this method to specify if the specified item should be highlighted during tracking
-    override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
-    
-    }
-    */
 
 }

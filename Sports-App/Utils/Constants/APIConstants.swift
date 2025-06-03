@@ -20,4 +20,4 @@ struct APIConstants {
         static let teams = "Teams"
         static let fixtures = "Fixtures"
     }
-}
+ }

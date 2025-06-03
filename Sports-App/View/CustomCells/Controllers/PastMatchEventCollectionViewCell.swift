@@ -76,18 +76,38 @@ class PastMatchEventCollectionViewCell: UICollectionViewCell {
             score.text = ""
         }
 
-    func configurePastMatchCell(hTeam: String?, hLogo: String?, aTeam: String?, aLogo: String?, mDate: String?, mScore: String?, eventTitle: String?) {
-            homeTeamTitle.text = hTeam
-            awayTeamTitle.text = aTeam
-            eventDate.text = mDate
-            score.text = mScore
-            self.eventTitle.text = eventTitle
+    func configurePastMatchCell(fixture:Fixture ,sportType:String) {
+      
+        eventDate.text = fixture.event_date
+        score.text = fixture.event_final_result
+        self.eventTitle.text = fixture.league_name
 
-            if let hLogo = hLogo, let hURL = URL(string: hLogo) {
-                homeTeam.kf.setImage(with: hURL, placeholder: UIImage(systemName: "photo"))
-            }
-            if let aLogo = aLogo, let aURL = URL(string: aLogo) {
-                awayTeam.kf.setImage(with: aURL, placeholder: UIImage(systemName: "photo"))
-            }
+        if sportType == "Tennis"{
+            homeTeamTitle.text = fixture.event_first_player ?? "Player One"
+            awayTeamTitle.text = fixture.event_second_player ?? "Player Two"
+            score.text = fixture.event_final_result
+
+        }else if sportType == "Cricket"{
+            homeTeamTitle.text = fixture.event_home_team
+            awayTeamTitle.text = fixture.event_away_team
+            
+            let res = "\(fixture.event_home_final_result ?? "-") - \(fixture.event_away_final_result ?? "-") "
+            score.text = res
+            score.font = score.font.withSize(14)
+            
+            eventDate.text = fixture.event_date_start
+        }else {
+            homeTeamTitle.text = fixture.event_home_team
+            awayTeamTitle.text = fixture.event_away_team
+            eventDate.text = fixture.event_date
+            score.text = fixture.event_final_result
+            
+        }
+            if let hLogo = fixture.home_team_logo, let hURL = URL(string: hLogo) {
+                    homeTeam.kf.setImage(with: hURL, placeholder: UIImage(systemName: "photo"))
+                }
+            if let aLogo = fixture.away_team_logo, let aURL = URL(string: aLogo) {
+                    awayTeam.kf.setImage(with: aURL, placeholder: UIImage(systemName: "photo"))
+                }
         }
 }
