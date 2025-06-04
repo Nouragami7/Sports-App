@@ -51,7 +51,7 @@ class LeagueTableViewCell: UITableViewCell {
            leagueCountry.text = (sportType == "Cricket") ? league.league_year : league.country_name
 
            if let leagueUrl = URL(string: league.league_logo ?? " ") {
-               leagueImage.kf.setImage(with: leagueUrl, placeholder: UIImage(systemName: "photo"))
+               leagueImage.kf.setImage(with: leagueUrl, placeholder: UIImage(named: "league-1"))
            }
 
            let heartImageName = isFavorite ? "heart.fill" : "heart"
@@ -69,7 +69,7 @@ class LeagueTableViewCell: UITableViewCell {
            favIcon.tintColor = UIColor(named: "DarkPurple")
 
            if let leagueUrl = URL(string: league.leagueLogo ?? " ") {
-               leagueImage.kf.setImage(with: leagueUrl, placeholder: UIImage(systemName: "league"))
+               leagueImage.kf.setImage(with: leagueUrl, placeholder: UIImage(named: "league-1"))
            }
        }
        

@@ -12,11 +12,11 @@ class FavoriteViewController: UIViewController,FavoriteViewProtocol, UITableView
     
 
     func renderFavoriteUI(leagues: [LocalLeague]) {
+        DispatchQueue.main.async {
+            self.leagueList = leagues
+            self.favoriteTableView.reloadData()
+        }
       
-       leagueList = leagues
-        print("fav  list \(leagueList)")
-        print("fav  list \(leagues)")
-        favoriteTableView.reloadData()
     }
     var presenter: FavoritePresenterProtocol?
 
@@ -34,9 +34,13 @@ class FavoriteViewController: UIViewController,FavoriteViewProtocol, UITableView
         favoriteTableView.dataSource = self
         favoriteTableView.delegate = self
         presenter = FavoritePresenter(view: self)
-        presenter?.fetchFavoriteLeagues()
-        favoriteTableView.reloadData()
         
+        DispatchQueue.main.async {
+            self.presenter?.fetchFavoriteLeagues()
+            self.favoriteTableView.reloadData()
+
+        }
+
         NetworkReachabilityManager.shared.startMonitoring()
         
        let favoriteNib = UINib(nibName: "LeagueTableViewCell", bundle: nil)
@@ -47,7 +51,6 @@ class FavoriteViewController: UIViewController,FavoriteViewProtocol, UITableView
     // MARK: - Table view data source
 
      func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -67,24 +70,33 @@ class FavoriteViewController: UIViewController,FavoriteViewProtocol, UITableView
         cell.configureFavoriteLeagueCell(league: league)
 
         cell.contentView.backgroundColor = UIColor.purple.withAlphaComponent(0.10)
-
         cell.contentView.layer.cornerRadius = 12
         cell.contentView.layer.masksToBounds = true
-
         cell.layer.shadowColor = UIColor.black.cgColor
         cell.layer.shadowOffset = CGSize(width: 0, height: 4)
         cell.layer.shadowRadius = 6
         cell.layer.shadowOpacity = 0.3
         cell.layer.masksToBounds = false
-
         cell.layer.borderWidth = 0
 
         cell.onAddToFavorite = { [weak self] isCurrentlyFavorite in
             guard let self = self else { return }
             let league = self.leagueList[indexPath.row]
-            self.presenter?.removeFromFavorite(league: league)
-            self.leagueList.remove(at: indexPath.row)
-            self.favoriteTableView.deleteRows(at: [indexPath], with: .fade)
+            AlertUtils.showConfirmationAlert(
+                on: self,
+                title: "Confirm Deletion",
+                message: "Are you sure you want to remove this league from favorites?",
+                confirmHandler: { [weak self] in
+                guard let self = self else { return }
+
+                self.presenter?.removeFromFavorite(league: league)
+                self.leagueList.remove(at: indexPath.row)
+                tableView.deleteRows(at: [indexPath], with: .automatic)
+            })
+            
+//            self.presenter?.removeFromFavorite(league: league)
+//            self.leagueList.remove(at: indexPath.row)
+//            self.favoriteTableView.deleteRows(at: [indexPath], with: .fade)
         }
 
         return cell

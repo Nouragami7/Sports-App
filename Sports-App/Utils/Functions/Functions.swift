@@ -26,7 +26,6 @@ class AppFunctions{
         let calendar = Calendar.current
         let dateFormatter = DateFormatter()
         
-        
         if let adjustedDate = calendar.date(byAdding: .year, value: yearOffset, to: date) {
             dateFormatter.locale = Locale(identifier: "en_US_POSIX")
             dateFormatter.dateFormat = "yyyy-MM-dd"

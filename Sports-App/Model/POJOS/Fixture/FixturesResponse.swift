@@ -9,5 +9,5 @@ import Foundation
 
 struct FixturesResponse: Decodable {
     let success: Int?
-    let result: [Fixture]?
+    var result: [Fixture]?
 }
