@@ -38,12 +38,20 @@ class ViewController: UIViewController {
             }
         }
         
-        func navigateToHome() {
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            if let teamDetailsVC = storyboard.instantiateViewController(withIdentifier: "homeScreen") as? HomeCollectionViewController {
-                self.navigationController?.pushViewController(teamDetailsVC, animated: true)
+    func navigateToHome() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if let navController = storyboard.instantiateViewController(withIdentifier: "MainNavigationController") as? UINavigationController {
+            if let window = UIApplication.shared.windows.first {
+                window.rootViewController = navController
+                window.makeKeyAndVisible()
+                
+                UIView.transition(with: window,
+                                duration: 0.3,
+                                options: .transitionCrossDissolve,
+                                animations: nil,
+                                completion: nil)
             }
+        }
     }
-
 }
 

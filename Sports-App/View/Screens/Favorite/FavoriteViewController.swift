@@ -60,22 +60,36 @@ class FavoriteViewController: UIViewController,FavoriteViewProtocol, UITableView
     }
 
     
-     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! LeagueTableViewCell
 
         let league = leagueList[indexPath.row]
-         cell.configureFavoriteLeagueCell(league: league)
-         
-         cell.onAddToFavorite = { [weak self] isCurrentlyFavorite in
-             guard let self = self else { return }
-             let league = self.leagueList[indexPath.row]
-             self.presenter?.removeFromFavorite(league: league)
-             self.leagueList.remove(at: indexPath.row)
-             self.favoriteTableView.deleteRows(at: [indexPath], with: .fade)
-         }
+        cell.configureFavoriteLeagueCell(league: league)
+
+        cell.contentView.backgroundColor = UIColor.purple.withAlphaComponent(0.10)
+
+        cell.contentView.layer.cornerRadius = 12
+        cell.contentView.layer.masksToBounds = true
+
+        cell.layer.shadowColor = UIColor.black.cgColor
+        cell.layer.shadowOffset = CGSize(width: 0, height: 4)
+        cell.layer.shadowRadius = 6
+        cell.layer.shadowOpacity = 0.3
+        cell.layer.masksToBounds = false
+
+        cell.layer.borderWidth = 0
+
+        cell.onAddToFavorite = { [weak self] isCurrentlyFavorite in
+            guard let self = self else { return }
+            let league = self.leagueList[indexPath.row]
+            self.presenter?.removeFromFavorite(league: league)
+            self.leagueList.remove(at: indexPath.row)
+            self.favoriteTableView.deleteRows(at: [indexPath], with: .fade)
+        }
 
         return cell
     }
+
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
             let storyboard = UIStoryboard(name: "LeagueDetails", bundle: nil)
@@ -96,21 +110,20 @@ class FavoriteViewController: UIViewController,FavoriteViewProtocol, UITableView
         
         
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-    
-       let verticalPadding: CGFloat = 8
-       let horizontalPadding: CGFloat = 16
+        let verticalPadding: CGFloat = 8
+        let horizontalPadding: CGFloat = 16
 
-       let backgroundView = UIView(frame: CGRect(
-           x: horizontalPadding,
-           y: verticalPadding,
-           width: tableView.bounds.width - 2 * horizontalPadding,
-           height: cell.contentView.frame.height - 2 * verticalPadding
-       ))
+        // Shrink cell frame to create spacing between cells
+        let frame = cell.frame
+        cell.frame = CGRect(x: frame.origin.x + horizontalPadding,
+                            y: frame.origin.y + verticalPadding,
+                            width: frame.size.width - 2 * horizontalPadding,
+                            height: frame.size.height - verticalPadding)
 
-       backgroundView.backgroundColor = .clear
-
-
+        // This makes shadows visible outside the cell
+        cell.backgroundColor = .clear
     }
+
      func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
@@ -131,6 +144,8 @@ class FavoriteViewController: UIViewController,FavoriteViewProtocol, UITableView
             })
         }
     }
+    
+   
 
 
 
