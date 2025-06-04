@@ -40,9 +40,9 @@ class PlayerCollectionViewCell: UICollectionViewCell {
         
         if let imageUrlString = player.player_image,
            let imageUrl = URL(string: imageUrlString) {
-            playerImage.kf.setImage(with: imageUrl, placeholder: UIImage(systemName: "person.crop.circle"))
+            playerImage.kf.setImage(with: imageUrl, placeholder: UIImage(named: "player"))
         } else {
-            playerImage.image = UIImage(systemName: "person.crop.circle.badge.exclamationmark")
+            playerImage.image = UIImage(named: "player")
         }
     }
 }

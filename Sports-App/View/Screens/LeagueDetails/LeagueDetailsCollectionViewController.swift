@@ -24,18 +24,18 @@ class LeagueDetailsCollectionViewController: UICollectionViewController, Details
         presenter = LeaguesDetailsPresnter(detailsVC: self)
         DispatchQueue.main.async {
             self.presenter.getUpcomingFixtures(
-                from: "2025-03-01",
-                to: "2025-03-30",
-//                from: AppFunctions.getDate(),
-//                to: AppFunctions.getDate(yearOffset: 1),
+         //       from: "2025-03-01",
+          //      to: "2025-03-30",
+                from: AppFunctions.getDate(),
+                to: AppFunctions.getDate(yearOffset: 1),
                 sport: self.sportType,
                 leagueId: self.leagueId)
             
             self.presenter.getPastFixtures(
-                from: "2025-02-01",
-                to: "2025-03-01",
-//                from: AppFunctions.getDate(yearOffset: -1),
-//                to: AppFunctions.getDate(),
+             //   from: "2025-02-01",
+             //   to: "2025-03-01",
+               from: AppFunctions.getDate(yearOffset: -1),
+                to: AppFunctions.getDate(),
                 sport: self.sportType,
                 leagueId: self.leagueId)
             
@@ -96,7 +96,7 @@ class LeagueDetailsCollectionViewController: UICollectionViewController, Details
             }
             
                         if fixtures.isEmpty {
-                            cell.score.text = "No"
+                            cell.score.text = "No Events"
                             cell.awayTeam.isHidden = true
                             cell.homeTeam.isHidden = true
                             cell.homeTeamTitle.isHidden = true
@@ -120,7 +120,7 @@ class LeagueDetailsCollectionViewController: UICollectionViewController, Details
             }
             
             if pastEvents.isEmpty {
-                cell.score.text = "No events"
+                cell.score.text = "No Events"
                 cell.awayTeam.isHidden = true
                 cell.homeTeam.isHidden = true
                 cell.homeTeamTitle.isHidden = true
