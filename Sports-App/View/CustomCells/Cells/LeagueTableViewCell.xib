@@ -35,25 +35,26 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="heart" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="YfB-sj-r8u">
-                        <rect key="frame" x="346" y="52" width="30" height="27"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="30" id="PU9-Xq-vQh"/>
-                            <constraint firstAttribute="height" constant="30" id="VlP-2c-QcV"/>
-                        </constraints>
-                    </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0gh-Ck-U1o">
                         <rect key="frame" x="138" y="57.666666666666664" width="39.666666666666657" height="19.333333333333336"/>
                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I6S-24-sbI">
+                        <rect key="frame" x="347" y="40" width="51" height="35"/>
+                        <state key="normal" title="Button"/>
+                        <buttonConfiguration key="configuration" style="plain" image="heart" catalog="system"/>
+                        <connections>
+                            <action selector="addToFavorite:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="q5E-5I-yKm"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstItem="0gh-Ck-U1o" firstAttribute="leading" secondItem="ScU-lQ-10D" secondAttribute="leading" id="2TX-AW-lYk"/>
+                    <constraint firstItem="I6S-24-sbI" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Kwj-n3-dnL"/>
+                    <constraint firstAttribute="trailing" secondItem="I6S-24-sbI" secondAttribute="trailing" constant="8" id="L0U-BY-8a0"/>
                     <constraint firstItem="Ymr-SF-xK6" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="OmH-R8-2rk"/>
-                    <constraint firstAttribute="trailing" secondItem="YfB-sj-r8u" secondAttribute="trailing" constant="30" id="RkY-wt-cfG"/>
-                    <constraint firstItem="YfB-sj-r8u" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="50" id="SF9-Tr-WP0"/>
                     <constraint firstItem="Ymr-SF-xK6" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="Ze9-pv-mr4"/>
                     <constraint firstAttribute="bottom" secondItem="Ymr-SF-xK6" secondAttribute="bottom" constant="8" id="c8u-wu-kyE"/>
                     <constraint firstItem="ScU-lQ-10D" firstAttribute="leading" secondItem="Ymr-SF-xK6" secondAttribute="trailing" constant="10" id="h9E-Bz-kRS"/>
@@ -63,7 +64,7 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="isFavourite" destination="YfB-sj-r8u" id="xoK-wF-vrW"/>
+                <outlet property="favIcon" destination="I6S-24-sbI" id="Py7-Lf-QUS"/>
                 <outlet property="leagueCountry" destination="0gh-Ck-U1o" id="wTM-Zd-PbZ"/>
                 <outlet property="leagueImage" destination="Ymr-SF-xK6" id="6Im-aQ-8Bh"/>
                 <outlet property="leagueName" destination="ScU-lQ-10D" id="O7f-61-CU7"/>

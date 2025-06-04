@@ -7,10 +7,20 @@
 
 import UIKit
 import Kingfisher
-class LeaguesTableViewController: UITableViewController, LeaguesProtocol {
+import Foundation
+
+class LeaguesTableViewController: UITableViewController, LeaguesProtocol, FavoriteViewProtocol {
+    func renderFavoriteUI(leagues: [LocalLeague]) {
+         print("legeus in leages\(leagues)")
+    }
+    
     
     var sport:String = ""
-    
+    var presenter: FavoritePresenter?
+    override func viewWillAppear(_ animated: Bool) {
+        
+        tableView.reloadData()
+    }
     func renderToView(result: LeaguesResponse) {
         DispatchQueue.main.async {
             self.leagues = result.result
@@ -22,6 +32,8 @@ class LeaguesTableViewController: UITableViewController, LeaguesProtocol {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        presenter = FavoritePresenter(view: self)
         tableView.separatorStyle = .none
 
         self.title = "Leagues"
@@ -48,12 +60,68 @@ class LeaguesTableViewController: UITableViewController, LeaguesProtocol {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! LeagueTableViewCell
         
-        let leagues = leagues[indexPath.row]
-        cell.configureLeagueCell(league:leagues, sportType: sport)
+        let league = leagues[indexPath.row]
+ 
+        let isFavorite = presenter?.isLeagueFavorite(leagueKey: "\(league.league_key)" )
         
+        cell.configureLeagueCell(league: league, sportType: sport, isFavorite: isFavorite ?? false)
+
+        cell.onAddToFavorite = { [weak self] isCurrentlyFavorite in
+            guard let self = self else { return }
+            
+            let leagueKey = String(league.league_key)
+            
+            if isCurrentlyFavorite {
+                // Remove from favorite
+                self.presenter?.removeFromFavorite(league: LocalLeague(
+                    leagueKey: "\(league.league_key)", leagueName: league.league_name, leagueLogo: league.league_logo, sportType: sport, isFav: true
+                ))
+                cell.configureLeagueCell(league: league, sportType: self.sport, isFavorite: false)
+
+                let alert = UIAlertController(title: "Removed", message: "\(league.league_name) removed from favorites", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default))
+                self.present(alert, animated: true)
+            } else {
+                // Add to favorite
+                let localLeague = LocalLeague(
+                    leagueKey: leagueKey,
+                    leagueName: league.league_name,
+                    leagueLogo: league.league_logo,
+                    sportType: self.sport,
+                    isFav: true
+                )
+
+                self.presenter?.addToFavorite(league: localLeague)
+                cell.configureLeagueCell(league: league, sportType: self.sport, isFavorite: true)
+
+                let alert = UIAlertController(title: "Added", message: "\(league.league_name) added to favorites", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default))
+                self.present(alert, animated: true)
+            }
+        }
+
+        
+     /*   cell.onAddToFavorite = { [weak self] in
+            guard let self = self else { return }
+
+            let localLeague = LocalLeague(
+                leagueKey: String(league.league_key),
+                leagueName: league.league_name,
+                leagueLogo: league.league_logo,
+                sportType: self.sport,
+                isFav: true
+            )
+            
+            presenter?.addToFavorite(league: localLeague)
+            
+            let alert = UIAlertController(title: "Added", message: "\(league.league_name ) added to favorites", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            self.present(alert, animated: true)
+        }
+*/
         return cell
-    
     }
+
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 120

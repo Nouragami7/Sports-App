@@ -24,14 +24,18 @@ class LeagueDetailsCollectionViewController: UICollectionViewController, Details
         presenter = LeaguesDetailsPresnter(detailsVC: self)
         DispatchQueue.main.async {
             self.presenter.getUpcomingFixtures(
-                from: AppFunctions.getDate(),
-                to: AppFunctions.getDate(yearOffset: 1),
+                from: "2025-03-01",
+                to: "2025-03-30",
+//                from: AppFunctions.getDate(),
+//                to: AppFunctions.getDate(yearOffset: 1),
                 sport: self.sportType,
                 leagueId: self.leagueId)
             
             self.presenter.getPastFixtures(
-                from: AppFunctions.getDate(yearOffset: -1),
-                to: AppFunctions.getDate(),
+                from: "2025-02-01",
+                to: "2025-03-01",
+//                from: AppFunctions.getDate(yearOffset: -1),
+//                to: AppFunctions.getDate(),
                 sport: self.sportType,
                 leagueId: self.leagueId)
             

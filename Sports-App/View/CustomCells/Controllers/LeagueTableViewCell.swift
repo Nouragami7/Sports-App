@@ -8,14 +8,17 @@
 import UIKit
 
 class LeagueTableViewCell: UITableViewCell {
-
+    
+    
+    @IBOutlet weak var favIcon: UIButton!
     @IBOutlet weak var leagueImage: UIImageView!
     
     @IBOutlet weak var leagueName: UILabel!
     
     @IBOutlet weak var leagueCountry: UILabel!
+    var onAddToFavorite: ((_ isCurrentlyFavorite: Bool) -> Void)?
+
     
-    @IBOutlet weak var isFavourite: UIImageView!
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -23,55 +26,59 @@ class LeagueTableViewCell: UITableViewCell {
         contentView.layer.borderWidth = 1
         contentView.layer.borderColor = UIColor(named: "DarkPurple")?.cgColor ?? UIColor.white.cgColor
         contentView.layer.masksToBounds = true
-
+        
         backgroundView = backgroundView
         layer.shadowColor = UIColor.lightGray.cgColor
         layer.shadowOffset = CGSize(width: 0, height: 2)
         layer.shadowOpacity = 0.3
         layer.shadowRadius = 4
         layer.masksToBounds = false
-        /*
-        contentView.layer.cornerRadius = 12
-        contentView.layer.masksToBounds = true
-        contentView.layer.borderWidth = 1.5
-        contentView.layer.borderColor = UIColor(red: 60/255, green: 30/255, blue: 100/255, alpha: 1).cgColor
-        layer.shadowColor = UIColor.lightGray.cgColor
-        layer.shadowOpacity = 0.25
-        layer.shadowOffset = CGSize(width: 0, height: 4)
-        layer.shadowRadius = 4
-        layer.masksToBounds = false
-        
-        let gradient = CAGradientLayer()
-        gradient.frame = contentView.bounds
-        gradient.colors = [
-            UIColor.white.cgColor,
-            UIColor(white: 0.95, alpha: 1).cgColor
-        ]
-        gradient.cornerRadius = 12
-        contentView.layer.insertSublayer(gradient, at: 0)
-*/
-        
     }
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
+        
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 6, left: 16, bottom: 6, right: 16))
     }
-    func configureLeagueCell(league:Leagues, sportType:String){
+    
+    func configureLeagueCell(league: Leagues, sportType: String, isFavorite: Bool) {
         leagueName.text = league.league_name
-        if sportType == "Cricket" {
-            leagueCountry.text = league.league_year
-        } else {
-            leagueCountry.text = league.country_name
+        leagueCountry.text = (sportType == "Cricket") ? league.league_year : league.country_name
+
+        if let leagueUrl = URL(string: league.league_logo ?? " ") {
+            leagueImage.kf.setImage(with: leagueUrl, placeholder: UIImage(systemName: "photo"))
         }
+
+        let heartImageName = isFavorite ? "heart.fill" : "heart"
+        favIcon.setImage(UIImage(systemName: heartImageName), for: .normal)
+        favIcon.tintColor = isFavorite ? .systemRed : .gray
+    }
+
+    func configureFavoriteLeagueCell(league:LocalLeague){
+        leagueName.text = league.leagueName
+        leagueCountry.text = league.sportType
+
+        let heartImage = UIImage(systemName: "heart.fill")?.withRenderingMode(.alwaysTemplate)
+            favIcon.setImage(heartImage, for: .normal)
+            favIcon.tintColor = UIColor(named: "Blue")
         
-        if let leagueUrl = URL(string: league.league_logo ?? " "){
+        if let leagueUrl = URL(string: league.leagueLogo ?? " "){
             leagueImage.kf.setImage(with: leagueUrl, placeholder: UIImage(systemName: "league"))
         }
+
     }
+    
+    @IBAction func addToFavorite(_ sender: Any) {
+   
+            let isCurrentlyFavorite = favIcon.currentImage == UIImage(systemName: "heart.fill")
+            onAddToFavorite?(isCurrentlyFavorite)
+         
+
+
+    }
+    
 }
