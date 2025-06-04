@@ -69,8 +69,6 @@
 		8AD0EE342DEA500B00EFD31E /* FixturesNetoworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AD0EE332DEA500B00EFD31E /* FixturesNetoworkService.swift */; };
 		8AD0EE362DEA524600EFD31E /* LeagueDetailsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AD0EE352DEA524600EFD31E /* LeagueDetailsPresenter.swift */; };
 		8AD0EE382DEA528500EFD31E /* DetailsPresenterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AD0EE372DEA528500EFD31E /* DetailsPresenterProtocol.swift */; };
-		8AD0EE3B2DEA6DBF00EFD31E /* PlaceholderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AD0EE392DEA6DBF00EFD31E /* PlaceholderCollectionViewCell.swift */; };
-		8AD0EE3C2DEA6DBF00EFD31E /* PlaceholderCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8AD0EE3A2DEA6DBF00EFD31E /* PlaceholderCollectionViewCell.xib */; };
 		8ADDE0A22DE902340083F7B1 /* HomeCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ADDE0A12DE902340083F7B1 /* HomeCollectionViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -156,8 +154,6 @@
 		8AD0EE332DEA500B00EFD31E /* FixturesNetoworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixturesNetoworkService.swift; sourceTree = "<group>"; };
 		8AD0EE352DEA524600EFD31E /* LeagueDetailsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeagueDetailsPresenter.swift; sourceTree = "<group>"; };
 		8AD0EE372DEA528500EFD31E /* DetailsPresenterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsPresenterProtocol.swift; sourceTree = "<group>"; };
-		8AD0EE392DEA6DBF00EFD31E /* PlaceholderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderCollectionViewCell.swift; sourceTree = "<group>"; };
-		8AD0EE3A2DEA6DBF00EFD31E /* PlaceholderCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlaceholderCollectionViewCell.xib; sourceTree = "<group>"; };
 		8ADDE0A12DE902340083F7B1 /* HomeCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -389,7 +385,6 @@
 				226E242F2DEB6C90003D2CBB /* PlayerCollectionViewCell.swift */,
 				226E24252DEB5B8C003D2CBB /* TeamLogoCollectionViewCell.swift */,
 				226E24162DEB3740003D2CBB /* TeamCollectionViewCell.swift */,
-				8AD0EE392DEA6DBF00EFD31E /* PlaceholderCollectionViewCell.swift */,
 				8A1989042DEA0D1D00957502 /* PastMatchEventCollectionViewCell.swift */,
 				22DD91792DE8CCC300BBB758 /* LeagueTableViewCell.swift */,
 				8A2A27992DEF31200043291E /* SectionHeaderCollectionReusableView.swift */,
@@ -407,7 +402,6 @@
 				226E24262DEB5B8C003D2CBB /* TeamLogoCollectionViewCell.xib */,
 				226E24302DEB6C90003D2CBB /* PlayerCollectionViewCell.xib */,
 				8A3C0F942DED075C006D77D3 /* UpCommingEventsCollectionViewCell.xib */,
-				8AD0EE3A2DEA6DBF00EFD31E /* PlaceholderCollectionViewCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -623,7 +617,6 @@
 				8A1989072DEA0D1D00957502 /* PastMatchEventCollectionViewCell.xib in Resources */,
 				226E24322DEB6C90003D2CBB /* PlayerCollectionViewCell.xib in Resources */,
 				2245390D2DF0215F00895D4E /* logo.json in Resources */,
-				8AD0EE3C2DEA6DBF00EFD31E /* PlaceholderCollectionViewCell.xib in Resources */,
 				8A3C0F962DED075C006D77D3 /* UpCommingEventsCollectionViewCell.xib in Resources */,
 				22DD91262DE8904700BBB758 /* Assets.xcassets in Resources */,
 				8A1989002DEA0A3300957502 /* LeagueDetails.storyboard in Resources */,
@@ -666,7 +659,6 @@
 				8A24FE422DF06EC40073DE6B /* SportCollectionViewCell.swift in Sources */,
 				22DD91912DE8E3D200BBB758 /* LeaguesProtocol.swift in Sources */,
 				8A25010C2DEFAB8300D03E30 /* FavoritePresenter.swift in Sources */,
-				8AD0EE3B2DEA6DBF00EFD31E /* PlaceholderCollectionViewCell.swift in Sources */,
 				22DD91242DE8904500BBB758 /* Sports_App.xcdatamodeld in Sources */,
 				226E24222DEB3B31003D2CBB /* Player.swift in Sources */,
 				8A2501112DEFB8F900D03E30 /* FavoriteViewController.swift in Sources */,

@@ -82,7 +82,9 @@
                             <outlet property="delegate" destination="0L0-tA-9hy" id="Id0-v5-Wu1"/>
                         </connections>
                     </collectionView>
-                    <tabBarItem key="tabBarItem" title="Leagues" image="soccerball" catalog="system" id="2Qk-gV-5jY"/>
+                    <tabBarItem key="tabBarItem" title="Leagues" image="soccerball" catalog="system" id="2Qk-gV-5jY">
+                        <color key="badgeColor" red="0.99192122490000001" green="0.82081983380000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </tabBarItem>
                     <navigationItem key="navigationItem" title="Sports " id="PdZ-6O-sG5"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                 </collectionViewController>
@@ -174,7 +176,10 @@
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="d27-EO-x6m">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" red="0.94901961089999998" green="0.94901961089999998" blue="0.94901961089999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" red="1" green="0.91850104399999999" blue="0.98804450929999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="selectedImageTintColor" red="0.57919406890000003" green="0.1280144453" blue="0.57268613580000005" alpha="0.64891601239999996" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBar>
                     <connections>
                         <segue destination="0L0-tA-9hy" kind="relationship" relationship="viewControllers" id="VSu-zv-xnu"/>

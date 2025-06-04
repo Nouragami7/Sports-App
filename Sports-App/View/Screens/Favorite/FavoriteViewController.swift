@@ -69,16 +69,6 @@ class FavoriteViewController: UIViewController,FavoriteViewProtocol, UITableView
         let league = leagueList[indexPath.row]
         cell.configureFavoriteLeagueCell(league: league)
 
-        cell.contentView.backgroundColor = UIColor.purple.withAlphaComponent(0.10)
-        cell.contentView.layer.cornerRadius = 12
-        cell.contentView.layer.masksToBounds = true
-        cell.layer.shadowColor = UIColor.black.cgColor
-        cell.layer.shadowOffset = CGSize(width: 0, height: 4)
-        cell.layer.shadowRadius = 6
-        cell.layer.shadowOpacity = 0.3
-        cell.layer.masksToBounds = false
-        cell.layer.borderWidth = 0
-
         cell.onAddToFavorite = { [weak self] isCurrentlyFavorite in
             guard let self = self else { return }
             let league = self.leagueList[indexPath.row]
