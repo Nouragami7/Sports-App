@@ -28,8 +28,9 @@ class TeamCollectionViewCell: UICollectionViewCell {
                teamLogo.contentMode = .scaleAspectFit
            }
            
-           func configure(with team: Teams) {
+    func configure(with team: Teams) {
                teamName.text = team.team_name
+        
                
                if let logoString = team.team_logo, let logoUrl = URL(string: logoString) {
                    teamLogo.kf.setImage(with: logoUrl, placeholder: UIImage(systemName: "league"))

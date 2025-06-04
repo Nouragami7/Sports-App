@@ -7,14 +7,20 @@
 
 import UIKit
 import Kingfisher
-class LeaguesTableViewController: UITableViewController, LeaguesProtocol {
-    
+import Foundation
+
+class LeaguesTableViewController: UITableViewController, LeaguesProtocol, FavoriteViewProtocol {
     var sport:String = ""
-    
+    var presenter: FavoritePresenter?
+    override func viewWillAppear(_ animated: Bool) {
+        
+        tableView.reloadData()
+    }
     func renderToView(result: LeaguesResponse) {
         DispatchQueue.main.async {
             self.leagues = result.result
             self.tableView.reloadData()
+            LoadingIndicatorUtil.shared.hide()
         }
     }
     
@@ -22,6 +28,9 @@ class LeaguesTableViewController: UITableViewController, LeaguesProtocol {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        LoadingIndicatorUtil.shared.show(on: self.view)
+        
+        presenter = FavoritePresenter(view: self)
         tableView.separatorStyle = .none
 
         self.title = "Leagues"
@@ -48,21 +57,40 @@ class LeaguesTableViewController: UITableViewController, LeaguesProtocol {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! LeagueTableViewCell
         
-        let leagues = leagues[indexPath.row]
-        cell.leagueName.text = leagues.league_name
-        if sport == "Cricket" {
-               cell.leagueCountry.text = leagues.league_year
-           } else {
-               cell.leagueCountry.text = leagues.country_name
-           }
+        let league = leagues[indexPath.row]
+ 
+        let isFavorite = presenter?.isLeagueFavorite(leagueKey: "\(league.league_key)" )
+        
+        cell.configureLeagueCell(league: league, sportType: sport, isFavorite: isFavorite ?? false)
 
-        if let leagueUrl = URL(string: leagues.league_logo ?? " "){
-            cell.leagueImage.kf.setImage(with: leagueUrl, placeholder: UIImage(systemName: "league"))
+        cell.onAddToFavorite = { [weak self] isCurrentlyFavorite in
+            guard let self = self else { return }
+            
+            let leagueKey = String(league.league_key)
+            
+            if isCurrentlyFavorite {
+                self.presenter?.removeFromFavorite(league: LocalLeague(
+                    leagueKey: "\(league.league_key)", leagueName: league.league_name, leagueLogo: league.league_logo, sportType: sport, isFav: true
+                ))
+                cell.configureLeagueCell(league: league, sportType: self.sport, isFavorite: false)
+
+                } else {
+                let localLeague = LocalLeague(
+                    leagueKey: leagueKey,
+                    leagueName: league.league_name,
+                    leagueLogo: league.league_logo,
+                    sportType: self.sport,
+                    isFav: true
+                )
+
+                self.presenter?.addToFavorite(league: localLeague)
+                cell.configureLeagueCell(league: league, sportType: self.sport, isFavorite: true)
+            }
         }
-            return cell
-        
-        
+
+        return cell
     }
+
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 120
@@ -79,90 +107,23 @@ class LeaguesTableViewController: UITableViewController, LeaguesProtocol {
         }
     }
     
-    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        let verticalPadding: CGFloat = 8
-        let horizontalPadding: CGFloat = 16
-
-        // Create background view with padding
-        let backgroundView = UIView(frame: CGRect(
-            x: horizontalPadding,
-            y: verticalPadding,
-            width: tableView.bounds.width - 2 * horizontalPadding,
-            height: cell.contentView.frame.height - 2 * verticalPadding
-        ))
-
-        backgroundView.backgroundColor = .clear
-
-        // Apply shadow and corner styling here if needed
-        cell.contentView.layer.cornerRadius = 12
-        cell.contentView.layer.borderWidth = 1
-        cell.contentView.layer.borderColor = UIColor(named: "DarkPurple")?.cgColor ?? UIColor.white.cgColor
-        cell.contentView.layer.masksToBounds = true
-
-        cell.backgroundView = backgroundView
-        cell.layer.shadowColor = UIColor.black.cgColor
-        cell.layer.shadowOffset = CGSize(width: 0, height: 2)
-        cell.layer.shadowOpacity = 0.3
-        cell.layer.shadowRadius = 4
-        cell.layer.masksToBounds = false
-
-    }
-
-
-    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 200 // space between cells
-    }
-
-    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let spacer = UIView()
-        
-        spacer.backgroundColor = .clear // or custom color if needed
-        return spacer
-    }
+   override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
     
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
+       let verticalPadding: CGFloat = 8
+       let horizontalPadding: CGFloat = 16
 
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
+       let backgroundView = UIView(frame: CGRect(
+           x: horizontalPadding,
+           y: verticalPadding,
+           width: tableView.bounds.width - 2 * horizontalPadding,
+           height: cell.contentView.frame.height - 2 * verticalPadding
+       ))
 
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
+       backgroundView.backgroundColor = .clear
 
     }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
+    func renderFavoriteUI(leagues: [LocalLeague]) {
+         print("legeus in leages\(leagues)")
     }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
     
 }

@@ -10,28 +10,29 @@ import UIKit
 private let reuseIdentifier = "Cell"
 
 class LeagueDetailsCollectionViewController: UICollectionViewController, DetailsProtocol  {
-  
+
     var leagueId: String = ""
     var sportType:String = ""
     var presenter: LeaguesDetailsPresnter!
     var fixtures: [Fixture] = []
     var pastEvents:[Fixture] = []
     var teams:[Teams] = []
-    
+    var datec =  " "
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        LoadingIndicatorUtil.shared.show(on: self.view)
+     
         presenter = LeaguesDetailsPresnter(detailsVC: self)
         DispatchQueue.main.async {
             self.presenter.getUpcomingFixtures(
-                from: "2025-06-02",
-                to: "2025-12-30",
+                from: AppFunctions.getDate(),
+                to: AppFunctions.getDate(yearOffset: 1),
                 sport: self.sportType,
                 leagueId: self.leagueId)
             
             self.presenter.getPastFixtures(
-                from: "2025-01-01",
-                to: "2025-06-01",
+               from: AppFunctions.getDate(yearOffset: -1),
+                to: AppFunctions.getDate(),
                 sport: self.sportType,
                 leagueId: self.leagueId)
             
@@ -45,7 +46,8 @@ class LeagueDetailsCollectionViewController: UICollectionViewController, Details
         
         let teamNib = UINib(nibName: "TeamCollectionViewCell", bundle: nil)
         collectionView.register(teamNib, forCellWithReuseIdentifier: "teamCell")
-        
+       
+
         let layout = UICollectionViewCompositionalLayout {sectionIndex,enviroment in
                 switch sectionIndex {
                 case 0 :
@@ -62,8 +64,6 @@ class LeagueDetailsCollectionViewController: UICollectionViewController, Details
             
     }
 
-
-    // MARK: UICollectionViewDataSource
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 3
@@ -93,7 +93,7 @@ class LeagueDetailsCollectionViewController: UICollectionViewController, Details
             }
             
                         if fixtures.isEmpty {
-                            cell.score.text = "No"
+                            cell.score.text = "No Events"
                             cell.awayTeam.isHidden = true
                             cell.homeTeam.isHidden = true
                             cell.homeTeamTitle.isHidden = true
@@ -106,7 +106,7 @@ class LeagueDetailsCollectionViewController: UICollectionViewController, Details
                         else{
                             let fixture = fixtures[indexPath.row]
             
-                            cell.configureUpcommingEentsCell(hTeam: fixture.event_home_team, hLogo: fixture.home_team_logo, aTeam: fixture.event_away_team , aLogo: fixture.away_team_logo, mDate: fixture.event_date, eventTitle: fixture.league_name)
+                            cell.configureUpcommingEentsCell(fixture: fixture, sportType: sportType)
             }
         
                  return cell
@@ -117,7 +117,7 @@ class LeagueDetailsCollectionViewController: UICollectionViewController, Details
             }
             
             if pastEvents.isEmpty {
-                cell.score.text = "No"
+                cell.score.text = "No Events"
                 cell.awayTeam.isHidden = true
                 cell.homeTeam.isHidden = true
                 cell.homeTeamTitle.isHidden = true
@@ -129,7 +129,7 @@ class LeagueDetailsCollectionViewController: UICollectionViewController, Details
             }
             else{
                 let fixture = pastEvents[indexPath.row]
-                cell.configurePastMatchCell(hTeam: fixture.event_home_team, hLogo: fixture.home_team_logo, aTeam: fixture.event_away_team , aLogo: fixture.away_team_logo, mDate: fixture.event_date, mScore: fixture.event_final_result, eventTitle: fixture.league_name)
+                cell.configurePastMatchCell(fixture: fixture, sportType:sportType)
                 return cell
             }
             
@@ -139,6 +139,7 @@ class LeagueDetailsCollectionViewController: UICollectionViewController, Details
             }
             let teams = teams[indexPath.row]
             cell.configure(with: teams)
+        
             return cell
             
         default:
@@ -155,10 +156,11 @@ class LeagueDetailsCollectionViewController: UICollectionViewController, Details
             let storyboard = UIStoryboard(name: "TeamDetails", bundle: nil)
             if let teamDetailsVC = storyboard.instantiateViewController(withIdentifier: "teamDetailsScreen") as? TeamDetailsCollectionViewController {
                 let selectedTeam = teams[indexPath.row]
-                teamDetailsVC.coach = selectedTeam.coaches
-                teamDetailsVC.players = selectedTeam.players
+                teamDetailsVC.coach = selectedTeam.coaches  ?? []
+                teamDetailsVC.players = selectedTeam.players ?? []
                 teamDetailsVC.teamName = selectedTeam.team_name
                 teamDetailsVC.teamLogo = selectedTeam.team_logo
+                teamDetailsVC.sportType = sportType
                 self.navigationController?.pushViewController(teamDetailsVC, animated: true)
             }
         }
@@ -183,7 +185,17 @@ class LeagueDetailsCollectionViewController: UICollectionViewController, Details
         section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 15, bottom: 20, trailing: 15)
         section.interGroupSpacing = 10
         section.orthogonalScrollingBehavior = .continuous
-
+        
+        // header
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                heightDimension: .absolute(40))
+        let header = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: headerSize,
+            elementKind: UICollectionView.elementKindSectionHeader,
+            alignment: .top
+        )
+        
+        section.boundarySupplementaryItems = [header]
         return section
     }
 
@@ -202,7 +214,16 @@ class LeagueDetailsCollectionViewController: UICollectionViewController, Details
         section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15)
         section.interGroupSpacing = 8
         section.orthogonalScrollingBehavior = .none
+        // header
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                heightDimension: .absolute(40))
+        let header = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: headerSize,
+            elementKind: UICollectionView.elementKindSectionHeader,
+            alignment: .top
+        )
         
+        section.boundarySupplementaryItems = [header]
         return section
     }
 
@@ -222,20 +243,61 @@ class LeagueDetailsCollectionViewController: UICollectionViewController, Details
         section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 15,
                                                         bottom: 10, trailing: 0)
         section.orthogonalScrollingBehavior = .continuous
+      
+        // header
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                heightDimension: .absolute(40))
+        let header = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: headerSize,
+            elementKind: UICollectionView.elementKindSectionHeader,
+            alignment: .top
+        )
         
+        section.boundarySupplementaryItems = [header]
         return section
     }
     
+    
+    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        if kind == UICollectionView.elementKindSectionHeader {
+            guard let headerView = collectionView.dequeueReusableSupplementaryView(
+                ofKind: kind,
+                withReuseIdentifier: "header",
+                for: indexPath
+            ) as? SectionHeaderCollectionReusableView else {
+                return UICollectionReusableView()
+            }
+
+            switch indexPath.section {
+            case 0:
+                headerView.titleLabel.text = "Upcoming Events"
+            case 1:
+                headerView.titleLabel.text = "Past Matches"
+            case 2:
+                headerView.titleLabel.text = "Teams"
+            default:
+                headerView.titleLabel.text = ""
+            }
+
+            return headerView
+        }
+        return UICollectionReusableView()
+    }
+
 
     func renderPastEventsToView(result: FixturesResponse) {
         DispatchQueue.main.async {
             if let fixtures = result.result, !fixtures.isEmpty {
                 self.pastEvents = fixtures
                 self.collectionView.reloadData()
+                LoadingIndicatorUtil.shared.hide()
+
             } else {
                 self.pastEvents = []
                 self.collectionView.reloadData()
                 print("No upcoming events found.")
+                LoadingIndicatorUtil.shared.hide()
+
                 
             }
         }
@@ -246,16 +308,17 @@ class LeagueDetailsCollectionViewController: UICollectionViewController, Details
             if let fixtures = result.result, !fixtures.isEmpty {
                 self.fixtures = fixtures
                 self.collectionView.reloadData()
+                LoadingIndicatorUtil.shared.hide()
+
             } else {
                 self.fixtures = []
                 self.collectionView.reloadData()
                 print("No upcoming events found.")
+                LoadingIndicatorUtil.shared.hide()
+
                 
             }
 
-        }
-        fixtures.forEach {
-            print("\($0.event_home_team ?? "") vs \($0.event_away_team ?? "") on \($0.event_date ?? "")")
         }
     }
     
@@ -263,39 +326,11 @@ class LeagueDetailsCollectionViewController: UICollectionViewController, Details
         DispatchQueue.main.async {
             self.teams = result.result
             self.collectionView.reloadData()
+            LoadingIndicatorUtil.shared.hide()
+
             
         }
     }
-    
-    // MARK: UICollectionViewDelegate
-
-    /*
-    // Uncomment this method to specify if the specified item should be highlighted during tracking
-    override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
-    
-    }
-    */
 
 }
+

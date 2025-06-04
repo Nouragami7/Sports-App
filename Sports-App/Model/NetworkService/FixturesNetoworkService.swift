@@ -45,7 +45,7 @@ class LeaguesDetailsNetworkService: LeaguesDetailsNetworkProtocol {
             completionHandler(nil)
             return
         }
-
+        
         AF.request(url).responseDecodable(of: TeamsResponse.self) { response in
             switch response.result {
             case .success(let teamsResponse):

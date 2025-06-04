@@ -15,6 +15,7 @@ class TeamDetailsCollectionViewController: UICollectionViewController {
     var players : [Players] = []
     var teamLogo : String?
     var teamName : String?
+    var sportType : String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,20 +42,7 @@ class TeamDetailsCollectionViewController: UICollectionViewController {
 
     }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
-
-    // MARK: UICollectionViewDataSource
-
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 2
     }
 
@@ -74,19 +62,7 @@ class TeamDetailsCollectionViewController: UICollectionViewController {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "teamInfoCell", for: indexPath) as? TeamLogoCollectionViewCell else {
                 return UICollectionViewCell()
             }
-
-            cell.teamName.text = teamName
-
-            if let teamLogoUrl = URL(string: teamLogo ?? "") {
-                cell.teamLogo.kf.setImage(with: teamLogoUrl, placeholder: UIImage(systemName: "league"))
-            }
-
-            if let firstCoach = coach.first {
-                cell.teamCoach.text = firstCoach.coach_name
-            } else {
-                cell.teamCoach.text = "No coach info"
-            }
-
+            cell.configuerTeamDeatilCell(team:teamName, sport:sportType, logo:teamLogo, coachName:coach.first)
             return cell
 
         default:
@@ -95,49 +71,48 @@ class TeamDetailsCollectionViewController: UICollectionViewController {
             }
             
             let player = players[indexPath.row]
-               cell.playerName.text = player.player_name ?? "N/A"
-               cell.playerNumber.text = "No: \(player.player_number ?? "-")"
-               cell.playerAge.text = "Age: \(player.player_age ?? "-")"
-               cell.playerRating.text = "Played: \(player.player_match_played ?? "-")"
-
-               if let imageUrlString = player.player_image,
-                  let imageUrl = URL(string: imageUrlString) {
-                   cell.playerImage.kf.setImage(with: imageUrl, placeholder: UIImage(systemName: "person.crop.circle"))
-               } else {
-                   cell.playerImage.image = UIImage(systemName: "person.crop.circle.badge.exclamationmark")
-               }
+            cell.congiurePlayerCell(player:player )
+           
             return cell
         }
     }
 
-    func teamsInfo()-> NSCollectionLayoutSection {
-           let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1)
-                                                 , heightDimension: .fractionalHeight(1))
-           let item = NSCollectionLayoutItem(layoutSize: itemSize)
-           
-           let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.7)
-                                                  , heightDimension: .absolute(225))
-           let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize
-                                                          , subitems: [item])
-           group.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0
-                                                         , bottom: 0, trailing: 15)
-           
-           
-           let section = NSCollectionLayoutSection(group: group)
-           section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 15
-                                                           , bottom: 10, trailing: 0)
-           section.orthogonalScrollingBehavior = .continuous
-           section.visibleItemsInvalidationHandler = { (items, offset, environment) in
-                items.forEach { item in
-                let distanceFromCenter = abs((item.frame.midX - offset.x) - environment.container.contentSize.width / 2.0)
-                let minScale: CGFloat = 0.8
-                let maxScale: CGFloat = 1.0
-                let scale = max(maxScale - (distanceFromCenter / environment.container.contentSize.width), minScale)
-                item.transform = CGAffineTransform(scaleX: scale, y: scale)
-                }
-           }
-           return section
-       }
+    func teamsInfo() -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1.0),
+            heightDimension: .fractionalHeight(1.0)
+        )
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1.0),
+            heightDimension: .absolute(130)
+        )
+        let group = NSCollectionLayoutGroup.horizontal(
+            layoutSize: groupSize,
+            subitems: [item]
+        )
+
+        let section = NSCollectionLayoutSection(group: group)
+        section.contentInsets = NSDirectionalEdgeInsets(
+            top: 10, leading: 15,
+            bottom: 10, trailing: 15
+        )
+        
+        section.orthogonalScrollingBehavior = .none
+ 
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                heightDimension: .absolute(40))
+        let header = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: headerSize,
+            elementKind: UICollectionView.elementKindSectionHeader,
+            alignment: .top
+        )
+        
+        section.boundarySupplementaryItems = [header]
+        return section
+    }
+
     
     
     func playersSection() -> NSCollectionLayoutSection {
@@ -159,41 +134,41 @@ class TeamDetailsCollectionViewController: UICollectionViewController {
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 15, bottom: 10, trailing: 15)
         section.interGroupSpacing = 5
-
+        
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                heightDimension: .absolute(40))
+        let header = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: headerSize,
+            elementKind: UICollectionView.elementKindSectionHeader,
+            alignment: .top
+        )
+        
+        section.boundarySupplementaryItems = [header]
         return section
     }
+    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        if kind == UICollectionView.elementKindSectionHeader {
+            guard let headerView = collectionView.dequeueReusableSupplementaryView(
+                ofKind: kind,
+                withReuseIdentifier: "teamDetailsHeader",
+                for: indexPath
+            ) as? SectionHeaderCollectionReusableView else {
+                return UICollectionReusableView()
+            }
 
-       
+            switch indexPath.section {
+            case 0:
+                headerView.titleLabel.text = "Team Info"
+            case 1:
+                headerView.titleLabel.text = "Team Players"
+            default:
+                headerView.titleLabel.text = ""
+            }
 
-    // MARK: UICollectionViewDelegate
-
-    /*
-    // Uncomment this method to specify if the specified item should be highlighted during tracking
-    override func collectionView(_ collectionView: UICollectionView, shouldHighlightItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    override func collectionView(_ collectionView: UICollectionView, shouldShowMenuForItemAt indexPath: IndexPath) -> Bool {
-        return false
-    }
-
-    override func collectionView(_ collectionView: UICollectionView, canPerformAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-        return false
+            return headerView
+        }
+        return UICollectionReusableView()
     }
 
-    override func collectionView(_ collectionView: UICollectionView, performAction action: Selector, forItemAt indexPath: IndexPath, withSender sender: Any?) {
-    
-    }
-    */
 
 }
