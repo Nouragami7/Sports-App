@@ -20,20 +20,17 @@ class LeagueDetailsCollectionViewController: UICollectionViewController, Details
     var datec =  " "
     override func viewDidLoad() {
         super.viewDidLoad()
+        LoadingIndicatorUtil.shared.show(on: self.view)
      
         presenter = LeaguesDetailsPresnter(detailsVC: self)
         DispatchQueue.main.async {
             self.presenter.getUpcomingFixtures(
-         //       from: "2025-03-01",
-          //      to: "2025-03-30",
                 from: AppFunctions.getDate(),
                 to: AppFunctions.getDate(yearOffset: 1),
                 sport: self.sportType,
                 leagueId: self.leagueId)
             
             self.presenter.getPastFixtures(
-             //   from: "2025-02-01",
-             //   to: "2025-03-01",
                from: AppFunctions.getDate(yearOffset: -1),
                 to: AppFunctions.getDate(),
                 sport: self.sportType,
@@ -293,10 +290,14 @@ class LeagueDetailsCollectionViewController: UICollectionViewController, Details
             if let fixtures = result.result, !fixtures.isEmpty {
                 self.pastEvents = fixtures
                 self.collectionView.reloadData()
+                LoadingIndicatorUtil.shared.hide()
+
             } else {
                 self.pastEvents = []
                 self.collectionView.reloadData()
                 print("No upcoming events found.")
+                LoadingIndicatorUtil.shared.hide()
+
                 
             }
         }
@@ -307,16 +308,17 @@ class LeagueDetailsCollectionViewController: UICollectionViewController, Details
             if let fixtures = result.result, !fixtures.isEmpty {
                 self.fixtures = fixtures
                 self.collectionView.reloadData()
+                LoadingIndicatorUtil.shared.hide()
+
             } else {
                 self.fixtures = []
                 self.collectionView.reloadData()
                 print("No upcoming events found.")
+                LoadingIndicatorUtil.shared.hide()
+
                 
             }
 
-        }
-        fixtures.forEach {
-            print("\($0.event_home_team ?? "") vs \($0.event_away_team ?? "") on \($0.event_date ?? "")")
         }
     }
     
@@ -324,6 +326,8 @@ class LeagueDetailsCollectionViewController: UICollectionViewController, Details
         DispatchQueue.main.async {
             self.teams = result.result
             self.collectionView.reloadData()
+            LoadingIndicatorUtil.shared.hide()
+
             
         }
     }

@@ -93,10 +93,7 @@ class FavoriteViewController: UIViewController,FavoriteViewProtocol, UITableView
                 self.leagueList.remove(at: indexPath.row)
                 tableView.deleteRows(at: [indexPath], with: .automatic)
             })
-            
-//            self.presenter?.removeFromFavorite(league: league)
-//            self.leagueList.remove(at: indexPath.row)
-//            self.favoriteTableView.deleteRows(at: [indexPath], with: .fade)
+    
         }
 
         return cell
@@ -124,15 +121,11 @@ class FavoriteViewController: UIViewController,FavoriteViewProtocol, UITableView
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let verticalPadding: CGFloat = 8
         let horizontalPadding: CGFloat = 16
-
-        // Shrink cell frame to create spacing between cells
         let frame = cell.frame
         cell.frame = CGRect(x: frame.origin.x + horizontalPadding,
                             y: frame.origin.y + verticalPadding,
                             width: frame.size.width - 2 * horizontalPadding,
                             height: frame.size.height - verticalPadding)
-
-        // This makes shadows visible outside the cell
         cell.backgroundColor = .clear
     }
 
@@ -157,16 +150,4 @@ class FavoriteViewController: UIViewController,FavoriteViewProtocol, UITableView
         }
     }
     
-   
-
-
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }*/
 }
