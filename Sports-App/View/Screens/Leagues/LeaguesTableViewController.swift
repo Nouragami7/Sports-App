@@ -72,17 +72,12 @@ class LeaguesTableViewController: UITableViewController, LeaguesProtocol, Favori
             let leagueKey = String(league.league_key)
             
             if isCurrentlyFavorite {
-                // Remove from favorite
                 self.presenter?.removeFromFavorite(league: LocalLeague(
                     leagueKey: "\(league.league_key)", leagueName: league.league_name, leagueLogo: league.league_logo, sportType: sport, isFav: true
                 ))
                 cell.configureLeagueCell(league: league, sportType: self.sport, isFavorite: false)
 
-                let alert = UIAlertController(title: "Removed", message: "\(league.league_name) removed from favorites", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .default))
-                self.present(alert, animated: true)
-            } else {
-                // Add to favorite
+                } else {
                 let localLeague = LocalLeague(
                     leagueKey: leagueKey,
                     leagueName: league.league_name,
@@ -93,32 +88,9 @@ class LeaguesTableViewController: UITableViewController, LeaguesProtocol, Favori
 
                 self.presenter?.addToFavorite(league: localLeague)
                 cell.configureLeagueCell(league: league, sportType: self.sport, isFavorite: true)
-
-                let alert = UIAlertController(title: "Added", message: "\(league.league_name) added to favorites", preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .default))
-                self.present(alert, animated: true)
             }
         }
 
-        
-     /*   cell.onAddToFavorite = { [weak self] in
-            guard let self = self else { return }
-
-            let localLeague = LocalLeague(
-                leagueKey: String(league.league_key),
-                leagueName: league.league_name,
-                leagueLogo: league.league_logo,
-                sportType: self.sport,
-                isFav: true
-            )
-            
-            presenter?.addToFavorite(league: localLeague)
-            
-            let alert = UIAlertController(title: "Added", message: "\(league.league_name ) added to favorites", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default))
-            self.present(alert, animated: true)
-        }
-*/
         return cell
     }
 

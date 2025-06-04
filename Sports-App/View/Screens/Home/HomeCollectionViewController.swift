@@ -74,7 +74,6 @@ class HomeCollectionViewController: UICollectionViewController , UICollectionVie
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "sportCell", for: indexPath)
         
 
-               // Configure the cell appearance
                cell.layer.borderWidth = 1
                cell.layer.borderColor = UIColor.purple.cgColor
                cell.layer.cornerRadius = 24
@@ -84,7 +83,6 @@ class HomeCollectionViewController: UICollectionViewController , UICollectionVie
                cell.layer.shadowRadius = 5
                cell.layer.masksToBounds = false
                
-               // Configure image view
                if let imageView = cell.viewWithTag(1) as? UIImageView {
                    imageView.image = UIImage(named: sports[indexPath.item].imageName)
                    imageView.layer.shadowColor = UIColor.black.cgColor
@@ -94,7 +92,6 @@ class HomeCollectionViewController: UICollectionViewController , UICollectionVie
                    imageView.layer.masksToBounds = false
                }
                
-               // Configure title label
                if let titleLabel = cell.viewWithTag(2) as? UILabel {
                    titleLabel.text = sports[indexPath.item].name
                    titleLabel.backgroundColor = UIColor.purple
