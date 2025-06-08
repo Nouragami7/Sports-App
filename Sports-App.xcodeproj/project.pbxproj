@@ -7,13 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2245390D2DF0215F00895D4E /* logo.json in Resources */ = {isa = PBXBuildFile; fileRef = 2245390C2DF0215F00895D4E /* logo.json */; };
 		224539102DF022BE00895D4E /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 2245390F2DF022BE00895D4E /* Lottie */; };
 		224539122DF0282A00895D4E /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224539112DF0282A00895D4E /* NetworkMonitor.swift */; };
 		224539142DF0387500895D4E /* AlertUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224539132DF0387500895D4E /* AlertUtils.swift */; };
 		225639252DF0EAB6006A6C65 /* LoadingIndicatorUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 225639242DF0EAB6006A6C65 /* LoadingIndicatorUtil.swift */; };
 		225639272DF0F03C006A6C65 /* FakeNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 225639262DF0F03C006A6C65 /* FakeNetworkService.swift */; };
 		225639292DF0F0E3006A6C65 /* FakeNetworkServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 225639282DF0F0E3006A6C65 /* FakeNetworkServiceTests.swift */; };
+		225D9F362DF5939600AEB915 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 225D9F352DF5939600AEB915 /* Onboarding.storyboard */; };
+		225D9F382DF5941400AEB915 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 225D9F372DF5941400AEB915 /* OnboardingViewController.swift */; };
+		225D9F3A2DF599DA00AEB915 /* FinalOnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 225D9F392DF599DA00AEB915 /* FinalOnboardingViewController.swift */; };
+		225D9F3C2DF5DAB700AEB915 /* app-logo.json in Resources */ = {isa = PBXBuildFile; fileRef = 225D9F3B2DF5DAB700AEB915 /* app-logo.json */; };
 		226E24102DEB168E003D2CBB /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226E240F2DEB168E003D2CBB /* Functions.swift */; };
 		226E24152DEB187E003D2CBB /* TeamDetailsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226E24142DEB187E003D2CBB /* TeamDetailsCollectionViewController.swift */; };
 		226E24182DEB3740003D2CBB /* TeamCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 226E24162DEB3740003D2CBB /* TeamCollectionViewCell.swift */; };
@@ -90,12 +93,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		2245390C2DF0215F00895D4E /* logo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = logo.json; sourceTree = "<group>"; };
 		224539112DF0282A00895D4E /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
 		224539132DF0387500895D4E /* AlertUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertUtils.swift; sourceTree = "<group>"; };
 		225639242DF0EAB6006A6C65 /* LoadingIndicatorUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingIndicatorUtil.swift; sourceTree = "<group>"; };
 		225639262DF0F03C006A6C65 /* FakeNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeNetworkService.swift; sourceTree = "<group>"; };
 		225639282DF0F0E3006A6C65 /* FakeNetworkServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeNetworkServiceTests.swift; sourceTree = "<group>"; };
+		225D9F352DF5939600AEB915 /* Onboarding.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Onboarding.storyboard; sourceTree = "<group>"; };
+		225D9F372DF5941400AEB915 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
+		225D9F392DF599DA00AEB915 /* FinalOnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinalOnboardingViewController.swift; sourceTree = "<group>"; };
+		225D9F3B2DF5DAB700AEB915 /* app-logo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "app-logo.json"; sourceTree = "<group>"; };
 		226E240D2DEB1544003D2CBB /* Sports-App.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Sports-App.xctestplan"; sourceTree = "<group>"; };
 		226E240F2DEB168E003D2CBB /* Functions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
 		226E24142DEB187E003D2CBB /* TeamDetailsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamDetailsCollectionViewController.swift; sourceTree = "<group>"; };
@@ -185,6 +191,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		225D9F342DF5936300AEB915 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				225D9F352DF5939600AEB915 /* Onboarding.storyboard */,
+				225D9F372DF5941400AEB915 /* OnboardingViewController.swift */,
+				225D9F392DF599DA00AEB915 /* FinalOnboardingViewController.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
 		226E240E2DEB1678003D2CBB /* Functions */ = {
 			isa = PBXGroup;
 			children = (
@@ -322,19 +338,19 @@
 		22DD91502DE8908C00BBB758 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				2245390C2DF0215F00895D4E /* logo.json */,
+				225D9F3B2DF5DAB700AEB915 /* app-logo.json */,
 				22DD91252DE8904700BBB758 /* Assets.xcassets */,
 				22DD91272DE8904700BBB758 /* LaunchScreen.storyboard */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		22DD91512DE890A500BBB758 /* Controllers */ = {
+		22DD91512DE890A500BBB758 /* Splash */ = {
 			isa = PBXGroup;
 			children = (
 				22DD911D2DE8904500BBB758 /* ViewController.swift */,
 			);
-			path = Controllers;
+			path = Splash;
 			sourceTree = "<group>";
 		};
 		22DD91522DE8910500BBB758 /* NetworkService */ = {
@@ -359,12 +375,13 @@
 		22DD91602DE8BF5300BBB758 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				225D9F342DF5936300AEB915 /* Onboarding */,
 				8A25010D2DEFB3FE00D03E30 /* Favorite */,
 				226E24132DEB1819003D2CBB /* TeamDetails */,
 				8A1988FE2DEA06BF00957502 /* LeagueDetails */,
 				8ADDE0A02DE901F40083F7B1 /* Home */,
 				22DD91962DE8F0C400BBB758 /* Leagues */,
-				22DD91512DE890A500BBB758 /* Controllers */,
+				22DD91512DE890A500BBB758 /* Splash */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -616,11 +633,12 @@
 				226E24192DEB3740003D2CBB /* TeamCollectionViewCell.xib in Resources */,
 				8A1989072DEA0D1D00957502 /* PastMatchEventCollectionViewCell.xib in Resources */,
 				226E24322DEB6C90003D2CBB /* PlayerCollectionViewCell.xib in Resources */,
-				2245390D2DF0215F00895D4E /* logo.json in Resources */,
 				8A3C0F962DED075C006D77D3 /* UpCommingEventsCollectionViewCell.xib in Resources */,
 				22DD91262DE8904700BBB758 /* Assets.xcassets in Resources */,
+				225D9F3C2DF5DAB700AEB915 /* app-logo.json in Resources */,
 				8A1989002DEA0A3300957502 /* LeagueDetails.storyboard in Resources */,
 				22DD91212DE8904500BBB758 /* Main.storyboard in Resources */,
+				225D9F362DF5939600AEB915 /* Onboarding.storyboard in Resources */,
 				226E242E2DEB64EA003D2CBB /* TeamDetails.storyboard in Resources */,
 				226E24282DEB5B8C003D2CBB /* TeamLogoCollectionViewCell.xib in Resources */,
 			);
@@ -657,6 +675,7 @@
 				22DD911A2DE8904500BBB758 /* AppDelegate.swift in Sources */,
 				8AD0EE302DEA4F2900EFD31E /* FixturesResponse.swift in Sources */,
 				8A24FE422DF06EC40073DE6B /* SportCollectionViewCell.swift in Sources */,
+				225D9F3A2DF599DA00AEB915 /* FinalOnboardingViewController.swift in Sources */,
 				22DD91912DE8E3D200BBB758 /* LeaguesProtocol.swift in Sources */,
 				8A25010C2DEFAB8300D03E30 /* FavoritePresenter.swift in Sources */,
 				22DD91242DE8904500BBB758 /* Sports_App.xcdatamodeld in Sources */,
@@ -675,6 +694,7 @@
 				8A2501072DEFA04E00D03E30 /* LocalLeague.swift in Sources */,
 				224539142DF0387500895D4E /* AlertUtils.swift in Sources */,
 				226E24182DEB3740003D2CBB /* TeamCollectionViewCell.swift in Sources */,
+				225D9F382DF5941400AEB915 /* OnboardingViewController.swift in Sources */,
 				8ADDE0A22DE902340083F7B1 /* HomeCollectionViewController.swift in Sources */,
 				8AD0EE342DEA500B00EFD31E /* FixturesNetoworkService.swift in Sources */,
 				8AD0EE382DEA528500EFD31E /* DetailsPresenterProtocol.swift in Sources */,

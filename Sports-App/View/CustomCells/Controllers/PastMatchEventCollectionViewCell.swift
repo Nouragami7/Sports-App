@@ -16,25 +16,32 @@ class PastMatchEventCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var eventTitle: UILabel!
     @IBOutlet weak var awayTeam: UIImageView!
     @IBOutlet weak var homeTeam: UIImageView!
-  
-    override func awakeFromNib() {
-        super.awakeFromNib()
+    
+    private var gradientLayer: CAGradientLayer?
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
         
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.colors = [
+        gradientLayer?.removeFromSuperlayer()
+
+        let newGradient = CAGradientLayer()
+        newGradient.colors = [
             UIColor(red: 90/255, green: 60/255, blue: 130/255, alpha: 1).cgColor,
             UIColor(red: 60/255, green: 30/255, blue: 100/255, alpha: 1).cgColor,
             UIColor(red: 25/255, green: 10/255, blue: 50/255, alpha: 1).cgColor
         ]
-        gradientLayer.locations = [0.0, 0.5, 1.0]
-        gradientLayer.startPoint = CGPoint(x: 0, y: 0)
-        gradientLayer.endPoint = CGPoint(x: 1, y: 1)
-        gradientLayer.frame = contentView.bounds
-        gradientLayer.cornerRadius = 16
+        newGradient.locations = [0.0, 0.5, 1.0]
+        newGradient.startPoint = CGPoint(x: 0, y: 0)
+        newGradient.endPoint = CGPoint(x: 1, y: 1)
+        newGradient.frame = contentView.bounds
+        newGradient.cornerRadius = 16
 
-        contentView.layer.sublayers?.removeAll(where: { $0 is CAGradientLayer })
-        contentView.layer.insertSublayer(gradientLayer, at: 0)
+        contentView.layer.insertSublayer(newGradient, at: 0)
+        gradientLayer = newGradient
+    }
 
+    override func awakeFromNib() {
+        super.awakeFromNib()
         contentView.layer.cornerRadius = 16
         contentView.layer.masksToBounds = false
         contentView.layer.shadowColor = UIColor.black.cgColor
